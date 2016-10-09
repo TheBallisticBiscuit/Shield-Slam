@@ -90,6 +90,8 @@ const int  RED_KNIGHT_WIDTH = 384;
 const int  RED_KNIGHT_HEIGHT = 256;
 
 const float RED_KNIGHT_ANIMATION_DELAY = 0.2f;
+
+const float BULLET_SPEED = 200.0f;
 // game
 const double PI = 3.14159265;
 const float FRAME_RATE  = 200.0f;               // the target frame rate (frames/sec)

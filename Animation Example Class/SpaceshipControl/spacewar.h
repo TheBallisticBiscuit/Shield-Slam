@@ -6,10 +6,12 @@
 #ifndef _SPACEWAR_H             // Prevent multiple definitions if this 
 #define _SPACEWAR_H             // file is included in more than one place
 #define WIN32_LEAN_AND_MEAN
+#define BULLET_SCALE 0.5
 
 #include "game.h"
 #include "textureManager.h"
 #include "image.h"
+#include "bullet.h"
 
 //=============================================================================
 // This class is the core of the game
@@ -17,6 +19,10 @@
 class Spacewar : public Game
 {
 private:
+	Bullet bullet1;
+	Bullet bullet2;
+	Bullet bullet3;
+	Bullet bullet4;
     TextureManager greenKnightTexture;     // ship texture
     Image   greenKnight;  // ship image
 	TextureManager redKnightTexture;
