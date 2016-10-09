@@ -38,6 +38,17 @@ const UINT GAME_HEIGHT = 480;               // height of game in pixels
 
 const float GREEN_KNIGHT_ANIMATION_DELAY = 0.2f;    // time between frames of ship animation
 
+// audio files required by audio.cpp
+// WAVE_BANK must be location of .xwb file.
+const char WAVE_BANK[]  = "audio\\Win\\WavesExample1.xwb";
+// SOUND_BANK must be location of .xsb file.
+const char SOUND_BANK[] = "audio\\Win\\SoundsExample1.xsb";
+
+const char BEEP1[] = "beep1";
+const char BEEP2[] = "beep2";
+const char BEEP3[] = "beep3";
+const char BEEP4[] = "beep4";
+const char HIT[]   = "hit";
 
 //Player 1 Cel
 const int  GREEN_KNIGHT_COLS = 6;
