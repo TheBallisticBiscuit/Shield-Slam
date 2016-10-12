@@ -28,6 +28,10 @@ Spacewar::~Spacewar()
 void Spacewar::initialize(HWND hwnd)
 {
 	Game::initialize(hwnd); // throws GameError
+	bullet1.initialize(graphics, 0, 0, 1, 1);
+	bullet2.initialize(graphics, GAME_WIDTH - 75, GAME_HEIGHT - 75, -1, -2);
+	bullet3.initialize(graphics, GAME_WIDTH - 75, 0, -2, 1);
+	bullet4.initialize(graphics, 0, GAME_HEIGHT - 75, 1, -3);
 	if (!greenKnightTexture.initialize(graphics,"pictures\\greensoldiersheetupdate.png"))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Player 1 texture"));
 
@@ -150,8 +154,15 @@ void Spacewar::update()
 	greenKnight.setX(greenKnight.getX() - frameTime * GREEN_KNIGHT_SPEED * greenDirectionx);
 	redKnight.setY(redKnight.getY() - frameTime * RED_KNIGHT_SPEED * redDirectiony);
 	greenKnight.setY(greenKnight.getY() - frameTime * GREEN_KNIGHT_SPEED * greenDirectiony);
+	
+
+
 	greenKnight.update(frameTime);
 	redKnight.update(frameTime);
+	bullet1.update(frameTime);
+	bullet2.update(frameTime);
+	bullet3.update(frameTime);
+	bullet4.update(frameTime);
 }
 
 //=============================================================================
@@ -174,6 +185,10 @@ void Spacewar::render()
 	graphics->spriteBegin();                // begin drawing sprites
 	greenKnight.draw();                            // add the spacejpo to the scene
 	redKnight.draw();
+	bullet1.draw();
+	bullet2.draw();
+	bullet3.draw();
+	bullet4.draw();
 	graphics->spriteEnd();                  // end drawing sprites
 }
 
@@ -186,6 +201,10 @@ void Spacewar::releaseAll()
 	Game::releaseAll();
 	greenKnightTexture.onLostDevice();
 	redKnightTexture.onLostDevice();
+	bullet1.onLostDevice();
+	bullet2.onLostDevice();
+	bullet3.onLostDevice();
+	bullet4.onLostDevice();
 	return;
 }
 
@@ -197,6 +216,10 @@ void Spacewar::resetAll()
 {
 	greenKnightTexture.onResetDevice();
 	redKnightTexture.onResetDevice();
+	bullet1.onResetDevice();
+	bullet2.onResetDevice();
+	bullet3.onResetDevice();
+	bullet4.onResetDevice();
 	Game::resetAll();
 	return;
 }
