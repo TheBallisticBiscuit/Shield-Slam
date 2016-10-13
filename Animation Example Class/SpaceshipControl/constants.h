@@ -27,16 +27,15 @@
 //                  Constants
 //-----------------------------------------------
 // graphic images
-const char JPO_IMAGE[]   = "pictures\\JPo Sheet.png"; //ship.png";   // spaceship
 
 // window
-const char CLASS_NAME[] = "Animation Example";
-const char GAME_TITLE[] = "Animation Example";
+const char CLASS_NAME[] = "Shield Slam";
+const char GAME_TITLE[] = "Shield Slam";
 const bool FULLSCREEN = false;              // windowed or fullscreen
-const UINT GAME_WIDTH =  640;               // width of game in pixels
+const UINT GAME_WIDTH =  800;               // width of game in pixels
 const UINT GAME_HEIGHT = 480;               // height of game in pixels
 
-const float GREEN_KNIGHT_ANIMATION_DELAY = 0.2f;    // time between frames of ship animation
+const float PLAYER_ANIMATION_DELAY = 0.2f;    // time between frames of ship animation
 
 // audio files required by audio.cpp
 // WAVE_BANK must be location of .xwb file.
@@ -51,45 +50,24 @@ const char BEEP4[] = "beep4";
 const char HIT[]   = "hit";
 
 //Player 1 Cel
-const int  GREEN_KNIGHT_COLS = 6;
-const int  GREEN_KNIGHT_WIDTH = 384;
-const int  GREEN_KNIGHT_HEIGHT = 256;
+const int  PLAYER_COLS = 6;
+const int  PLAYER_WIDTH = 384;
+const int  PLAYER_HEIGHT = 256;
 //Player 1 actions
-const int GREEN_KNIGHT_LOOKING_RIGHT_START = 12;			//1st row
-const int GREEN_KNIGHT_LOOKING_RIGHT_END = 12;
-const int GREEN_KNIGHT_LOOKING_LEFT_START = 16;				//2nd row
-const int GREEN_KNIGHT_LOOKING_LEFT_END = 16;
-const int GREEN_KNIGHT_WALKING_RIGHT_START = 12;
-const int GREEN_KNIGHT_WALKING_RIGHT_END = 16;
-const int GREEN_KNIGHT_WALKING_LEFT_START = 18;
-const int GREEN_KNIGHT_WALKING_LEFT_END = 22;
-const int GREEN_KNIGHT_WALKING_UP_START = 6;
-const int GREEN_KNIGHT_WALKING_UP_END = 11;
-const int GREEN_KNIGHT_WALKING_DOWN_START = 0;
-const int GREEN_KNIGHT_WALKING_DOWN_END = 5;
+const int PLAYER_LOOKING_RIGHT_START = 12;			//1st row
+const int PLAYER_LOOKING_RIGHT_END = 12;
+const int PLAYER_LOOKING_LEFT_START = 16;				//2nd row
+const int PLAYER_LOOKING_LEFT_END = 16;
+const int PLAYER_WALKING_RIGHT_START = 12;
+const int PLAYER_WALKING_RIGHT_END = 16;
+const int PLAYER_WALKING_LEFT_START = 18;
+const int PLAYER_WALKING_LEFT_END = 22;
+const int PLAYER_WALKING_UP_START = 6;
+const int PLAYER_WALKING_UP_END = 11;
+const int PLAYER_WALKING_DOWN_START = 0;
+const int PLAYER_WALKING_DOWN_END = 5;
 
-const float GREEN_KNIGHT_SPEED = 90.5f;
-
-const int RED_KNIGHT_LOOKING_RIGHT_START = 12;			//1st row
-const int RED_KNIGHT_LOOKING_RIGHT_END = 12;
-const int RED_KNIGHT_LOOKING_LEFT_START = 16;				//2nd row
-const int RED_KNIGHT_LOOKING_LEFT_END = 16;
-const int RED_KNIGHT_WALKING_RIGHT_START = 12;
-const int RED_KNIGHT_WALKING_RIGHT_END = 16;
-const int RED_KNIGHT_WALKING_LEFT_START = 18;
-const int RED_KNIGHT_WALKING_LEFT_END = 22;
-const int RED_KNIGHT_WALKING_UP_START = 6;
-const int RED_KNIGHT_WALKING_UP_END = 11;
-const int RED_KNIGHT_WALKING_DOWN_START = 0;
-const int RED_KNIGHT_WALKING_DOWN_END = 5;
-
-const float RED_KNIGHT_SPEED = 90.5f;
-
-const int  RED_KNIGHT_COLS = 6;
-const int  RED_KNIGHT_WIDTH = 384;
-const int  RED_KNIGHT_HEIGHT = 256;
-
-const float RED_KNIGHT_ANIMATION_DELAY = 0.2f;
+const float PLAYER_SPEED = 90.5f;
 
 const float BULLET_SPEED = 200.0f;
 // game
@@ -105,13 +83,13 @@ const float MAX_FRAME_TIME = 1.0f/MIN_FRAME_RATE; // maximum time used in calcul
 const UCHAR ESC_KEY      = VK_ESCAPE;       // escape key
 const UCHAR ALT_KEY      = VK_MENU;         // Alt key
 const UCHAR ENTER_KEY    = VK_RETURN;       // Enter key
-const UCHAR GREEN_KNIGHT_LEFT_KEY    = VK_LEFT;     // left arrow
-const UCHAR GREEN_KNIGHT_RIGHT_KEY   = VK_RIGHT;    // right arrow
-const UCHAR GREEN_KNIGHT_UP_KEY      = VK_UP;       // up arrow
-const UCHAR GREEN_KNIGHT_DOWN_KEY    = VK_DOWN;     // down arrow
+const UCHAR PLAYER2_LEFT_KEY    = VK_LEFT;     // left arrow
+const UCHAR PLAYER2_RIGHT_KEY   = VK_RIGHT;    // right arrow
+const UCHAR PLAYER2_UP_KEY      = VK_UP;       // up arrow
+const UCHAR PLAYER2_DOWN_KEY    = VK_DOWN;     // down arrow
 
-const UCHAR RED_KNIGHT_LEFT_KEY = 0x41;
-const UCHAR RED_KNIGHT_RIGHT_KEY = 0x44;
-const UCHAR RED_KNIGHT_UP_KEY = 0x57;
-const UCHAR RED_KNIGHT_DOWN_KEY = 0x53;
+const UCHAR PLAYER1_LEFT_KEY = 0x41;
+const UCHAR PLAYER1_RIGHT_KEY = 0x44;
+const UCHAR PLAYER1_UP_KEY = 0x57;
+const UCHAR PLAYER1_DOWN_KEY = 0x53;
 #endif

@@ -12,6 +12,7 @@
 #include "textureManager.h"
 #include "image.h"
 #include "bullet.h"
+#include "player.h"
 
 //=============================================================================
 // This class is the core of the game
@@ -23,12 +24,8 @@ private:
 	Bullet bullet2;
 	Bullet bullet3;
 	Bullet bullet4;
-    TextureManager greenKnightTexture;     // ship texture
-    Image   greenKnight;  // ship image
-	TextureManager redKnightTexture;
-	Image redKnight;
-	enum LastDirection {left, right, up, down} greenLastDirection;
-	LastDirection redLastDirection;
+	Player player1;
+	Player player2;
 	bool keyDownLastFrame;
 	bool keyDownThisFrame;
 

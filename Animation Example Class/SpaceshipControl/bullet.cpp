@@ -2,7 +2,8 @@
 
 Bullet::Bullet(void){};
 
-void Bullet::initialize(Graphics* graphics, float startingX, float startingY, float startingDirectionX, float startingDirectionY){
+bool Bullet::initialize(Graphics* graphics, float startingX, float startingY, float startingXVelocity, float startingYVelocity, 
+						Game* game, int width, int height, int ncols){
 	if (!bulletTexture.initialize(graphics,"pictures\\bullet.png"))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing bullet texture"));
 	if (!bullet.initialize(graphics, 0, 0, 0, &bulletTexture))
@@ -10,36 +11,15 @@ void Bullet::initialize(Graphics* graphics, float startingX, float startingY, fl
 	bullet.setX(startingX);
 	bullet.setY(startingY);
 	bullet.setScale(0.6);
-	directionX = startingDirectionX;
-	directionY = startingDirectionY;
+	velocity.x = startingXVelocity;
+	velocity.y = startingYVelocity;
+	return Entity::initialize(game, width, height, ncols, &bulletTexture);
 }
 
 void Bullet::update(float frameTime){
-	float testX = bullet.getX() + (BULLET_SPEED * directionX * frameTime);
-	float testY = bullet.getY() + (BULLET_SPEED * directionY * frameTime);
-	if(testX < 0 || testX + bullet.getWidth() * bullet.getScale() > GAME_WIDTH){
-		directionX *= -1;
-	}
+	float testX = bullet.getX() + (BULLET_SPEED * velocity.x * frameTime);
+	float testY = bullet.getY() + (BULLET_SPEED * velocity.y * frameTime);
 	bullet.setX(testX);
-	if(testY < 0 || testY + bullet.getHeight() * bullet.getScale() > GAME_HEIGHT){
-		directionY *= -1;
-	}
 	bullet.setY(testY);
-	if(directionX > 0){
-		if(directionY > 0){
-			bullet.setDegrees(135);
-		}
-		else{
-			bullet.setDegrees(45);
-		}
-	}
-	else{
-		if(directionY > 0){
-			bullet.setDegrees(225);
-		}
-		else{
-			bullet.setDegrees(315);
-		}
-	}
-
+	bullet.update(frameTime);
 }
