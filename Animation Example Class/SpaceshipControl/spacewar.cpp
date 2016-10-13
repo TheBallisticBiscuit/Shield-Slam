@@ -34,6 +34,8 @@ void Spacewar::initialize(HWND hwnd)
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Background image"));
 	background.setScale(BACKGROUND_SCALE);
 
+	audio->playCue(BACKGROUND_MUSIC);
+
 	bullet1.initialize(graphics, 0, 0, 1, 1);
 	bullet2.initialize(graphics, GAME_WIDTH - 75, GAME_HEIGHT - 75, -1, -2);
 	bullet3.initialize(graphics, GAME_WIDTH - 75, 0, -2, 1);
