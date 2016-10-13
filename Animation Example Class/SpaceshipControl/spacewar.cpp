@@ -28,7 +28,7 @@ Spacewar::~Spacewar()
 void Spacewar::initialize(HWND hwnd)
 {
 	Game::initialize(hwnd); // throws GameError
-<<<<<<< HEAD
+//<<<<<<< HEAD
 	bullet1.initialize(graphics, 0, 0, 1, 1, this, 0, 0, 1);
 	bullet2.initialize(graphics, GAME_WIDTH - 75, GAME_HEIGHT - 75, -1, -1, this, 0, 0, 1);
 	bullet3.initialize(graphics, GAME_WIDTH - 75, 0, -1, 1, this, 0, 0, 1);
@@ -39,14 +39,16 @@ void Spacewar::initialize(HWND hwnd)
 	player2.initialize(graphics, "pictures\\greensoldiersheetupdate.png", GAME_WIDTH/4+100, GAME_HEIGHT/2, 
 		PLAYER2_RIGHT_KEY, PLAYER2_LEFT_KEY, PLAYER2_DOWN_KEY, PLAYER2_UP_KEY,
 		this);
+//=======
 	if (!backgroundTexture.initialize(graphics, BACKGROUND_IMAGE))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Background texture"));
-	if (!background.initialize(graphics, 640,480,0, &backgroundTexture))
+	if (!background.initialize(graphics, 800,480,0, &backgroundTexture))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Background image"));
 	background.setScale(BACKGROUND_SCALE);
 
 	audio->playCue(BACKGROUND_MUSIC);
 
+//>>>>>>> origin/Audio_&_Background
 	return;
 }
 
@@ -87,9 +89,12 @@ void Spacewar::collisions()
 void Spacewar::render()
 {
 	graphics->spriteBegin();                // begin drawing sprites
+//<<<<<<< HEAD
+	background.draw();
 	player1.draw();                            // add the spacejpo to the scene
 	player2.draw();
-	background.draw();
+//=======
+//>>>>>>> origin/Audio_&_Background
 	bullet1.draw();
 	bullet2.draw();
 	bullet3.draw();
@@ -104,8 +109,12 @@ void Spacewar::render()
 void Spacewar::releaseAll()
 {
 	Game::releaseAll();
+//<<<<<<< HEAD
 	player1.onLostDevice();
 	player2.onLostDevice();
+//=======
+	backgroundTexture.onLostDevice();
+//>>>>>>> origin/Audio_&_Background
 	bullet1.onLostDevice();
 	bullet2.onLostDevice();
 	bullet3.onLostDevice();
@@ -119,8 +128,14 @@ void Spacewar::releaseAll()
 //=============================================================================
 void Spacewar::resetAll()
 {
+//<<<<<<< HEAD
 	player1.onResetDevice();
 	player2.onResetDevice();
+//=======
+	backgroundTexture.onResetDevice();
+	greenKnightTexture.onResetDevice();
+	redKnightTexture.onResetDevice();
+//>>>>>>> origin/Audio_&_Background
 	bullet1.onResetDevice();
 	bullet2.onResetDevice();
 	bullet3.onResetDevice();

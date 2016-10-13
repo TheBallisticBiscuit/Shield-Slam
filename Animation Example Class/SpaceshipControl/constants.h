@@ -27,9 +27,11 @@
 //                  Constants
 //-----------------------------------------------
 // graphic images
-<<<<<<< HEAD
-=======
+//<<<<<<< HEAD
+//=======
 const char BACKGROUND_IMAGE[] = "pictures\\Background1.png";
+const char JPO_IMAGE[]   = "pictures\\JPo Sheet.png"; //ship.png";   // spaceship
+//>>>>>>> origin/Audio_&_Background
 
 // window
 const char CLASS_NAME[] = "Shield Slam";
