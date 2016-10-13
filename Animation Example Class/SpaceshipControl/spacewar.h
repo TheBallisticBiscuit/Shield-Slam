@@ -7,6 +7,7 @@
 #define _SPACEWAR_H             // file is included in more than one place
 #define WIN32_LEAN_AND_MEAN
 #define BULLET_SCALE 0.5
+#define BACKGROUND_SCALE 0.7
 
 #include "game.h"
 #include "textureManager.h"
@@ -27,6 +28,8 @@ private:
     Image   greenKnight;  // ship image
 	TextureManager redKnightTexture;
 	Image redKnight;
+	TextureManager backgroundTexture;
+	Image background;
 	enum LastDirection {left, right, up, down} greenLastDirection;
 	LastDirection redLastDirection;
 	bool keyDownLastFrame;
