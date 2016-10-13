@@ -28,6 +28,7 @@ Spacewar::~Spacewar()
 void Spacewar::initialize(HWND hwnd)
 {
 	Game::initialize(hwnd); // throws GameError
+<<<<<<< HEAD
 	bullet1.initialize(graphics, 0, 0, 1, 1, this, 0, 0, 1);
 	bullet2.initialize(graphics, GAME_WIDTH - 75, GAME_HEIGHT - 75, -1, -1, this, 0, 0, 1);
 	bullet3.initialize(graphics, GAME_WIDTH - 75, 0, -1, 1, this, 0, 0, 1);
@@ -38,6 +39,14 @@ void Spacewar::initialize(HWND hwnd)
 	player2.initialize(graphics, "pictures\\greensoldiersheetupdate.png", GAME_WIDTH/4+100, GAME_HEIGHT/2, 
 		PLAYER2_RIGHT_KEY, PLAYER2_LEFT_KEY, PLAYER2_DOWN_KEY, PLAYER2_UP_KEY,
 		this);
+	if (!backgroundTexture.initialize(graphics, BACKGROUND_IMAGE))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Background texture"));
+	if (!background.initialize(graphics, 640,480,0, &backgroundTexture))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Background image"));
+	background.setScale(BACKGROUND_SCALE);
+
+	audio->playCue(BACKGROUND_MUSIC);
+
 	return;
 }
 
@@ -80,6 +89,7 @@ void Spacewar::render()
 	graphics->spriteBegin();                // begin drawing sprites
 	player1.draw();                            // add the spacejpo to the scene
 	player2.draw();
+	background.draw();
 	bullet1.draw();
 	bullet2.draw();
 	bullet3.draw();

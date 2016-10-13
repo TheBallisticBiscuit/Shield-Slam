@@ -27,6 +27,9 @@
 //                  Constants
 //-----------------------------------------------
 // graphic images
+<<<<<<< HEAD
+=======
+const char BACKGROUND_IMAGE[] = "pictures\\Background1.png";
 
 // window
 const char CLASS_NAME[] = "Shield Slam";
@@ -43,6 +46,7 @@ const char WAVE_BANK[]  = "audio\\Win\\WavesExample1.xwb";
 // SOUND_BANK must be location of .xsb file.
 const char SOUND_BANK[] = "audio\\Win\\SoundsExample1.xsb";
 
+const char BACKGROUND_MUSIC[] = "BackgroundMusic";
 const char BEEP1[] = "beep1";
 const char BEEP2[] = "beep2";
 const char BEEP3[] = "beep3";

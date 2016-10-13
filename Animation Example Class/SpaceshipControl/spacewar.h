@@ -7,6 +7,7 @@
 #define _SPACEWAR_H             // file is included in more than one place
 #define WIN32_LEAN_AND_MEAN
 #define BULLET_SCALE 0.5
+#define BACKGROUND_SCALE 0.7
 
 #include "game.h"
 #include "textureManager.h"
@@ -24,8 +25,10 @@ private:
 	Bullet bullet2;
 	Bullet bullet3;
 	Bullet bullet4;
+<<<<<<< HEAD
 	Player player1;
 	Player player2;
+>>>>>>> origin/Audio_&_Background
 	bool keyDownLastFrame;
 	bool keyDownThisFrame;
 
