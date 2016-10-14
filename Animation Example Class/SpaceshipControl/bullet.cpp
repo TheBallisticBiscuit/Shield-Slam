@@ -11,6 +11,7 @@ bool Bullet::initialize(Graphics* graphics, float startingX, float startingY, fl
 	setScale(0.6);
 	velocity.x = startingXVelocity;
 	velocity.y = startingYVelocity;
+	collisionType = entityNS::CIRCLE;
 	return Entity::initialize(game, 0, 0, 0, &bulletTexture);
 }
 

@@ -26,4 +26,5 @@ private:
 	int PLAYER_UP_KEY;
 	int PLAYER_DOWN_KEY;
 	TextureManager playerTexture;
+	bool isDead;
 };

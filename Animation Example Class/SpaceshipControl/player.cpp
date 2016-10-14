@@ -2,6 +2,30 @@
 
 Player::Player(void){}
 
+bool Player::initialize(Graphics* graphics, const char* filepath, float startingX, float startingY,
+		int rightKey, int leftKey, int downKey, int upKey,
+		Game* game){
+	if (!playerTexture.initialize(graphics, filepath))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Player 1 texture"));
+
+	/*if (!player.initialize(graphics, 256/4, 384/6, PLAYER_COLS, &playerTexture))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Player 1"));*/
+	setX(startingX);                    // start above and left of planet
+	setY(startingY);
+	setFrames(PLAYER_LOOKING_RIGHT_START, PLAYER_LOOKING_RIGHT_END);   // animation frames
+	setCurrentFrame(PLAYER_LOOKING_RIGHT_START);     // starting frame
+	setFrameDelay(PLAYER_ANIMATION_DELAY);
+	PLAYER_RIGHT_KEY = rightKey;
+	PLAYER_LEFT_KEY = leftKey;
+	PLAYER_DOWN_KEY = downKey;
+	PLAYER_UP_KEY = upKey;
+	lastXDirection = left;
+	lastDirection = left;
+	collisionType = entityNS::BOX;
+	isDead = false;
+	return Entity::initialize(game, PLAYER_WIDTH, PLAYER_HEIGHT, PLAYER_COLS, &playerTexture);
+}
+
 void Player::update(float frameTime){
 	velocity.x = 0;
 	velocity.y = 0;
@@ -52,28 +76,6 @@ void Player::update(float frameTime){
 	setX(getX() - frameTime * PLAYER_SPEED * velocity.x);
 	setY(getY() - frameTime * PLAYER_SPEED * velocity.y);
 	Entity::update(frameTime);
-}
-
-bool Player::initialize(Graphics* graphics, const char* filepath, float startingX, float startingY,
-		int rightKey, int leftKey, int downKey, int upKey,
-		Game* game){
-	if (!playerTexture.initialize(graphics, filepath))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Player 1 texture"));
-
-	/*if (!player.initialize(graphics, 256/4, 384/6, PLAYER_COLS, &playerTexture))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Player 1"));*/
-	setX(startingX);                    // start above and left of planet
-	setY(startingY);
-	setFrames(PLAYER_LOOKING_RIGHT_START, PLAYER_LOOKING_RIGHT_END);   // animation frames
-	setCurrentFrame(PLAYER_LOOKING_RIGHT_START);     // starting frame
-	setFrameDelay(PLAYER_ANIMATION_DELAY);
-	PLAYER_RIGHT_KEY = rightKey;
-	PLAYER_LEFT_KEY = leftKey;
-	PLAYER_DOWN_KEY = downKey;
-	PLAYER_UP_KEY = upKey;
-	lastXDirection = left;
-	lastDirection = left;
-	return Entity::initialize(game, PLAYER_WIDTH, PLAYER_HEIGHT, PLAYER_COLS, &playerTexture);
 }
 
 void Player::onLostDevice(){
