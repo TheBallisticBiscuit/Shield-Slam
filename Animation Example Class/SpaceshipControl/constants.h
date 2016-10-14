@@ -57,8 +57,8 @@ const char HIT[]   = "hit";
 
 //Player 1 Cel
 const int  PLAYER_COLS = 6;
-const int  PLAYER_WIDTH = 384;
-const int  PLAYER_HEIGHT = 256;
+const int  PLAYER_WIDTH = 384/6;
+const int  PLAYER_HEIGHT = 256/4;
 //Player 1 actions
 const int PLAYER_LOOKING_RIGHT_START = 12;			//1st row
 const int PLAYER_LOOKING_RIGHT_END = 12;

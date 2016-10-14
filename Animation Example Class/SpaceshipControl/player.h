@@ -1,4 +1,5 @@
 #pragma once
+#include "game.h"
 #include "graphics.h"
 #include "textureManager.h"
 #include "image.h"
@@ -15,7 +16,7 @@ public:
 	void onLostDevice();
 	void onResetDevice();
 	void draw(){
-		player.draw();
+		Entity::draw();
 	}
 private:
 	enum LastDirection {left, right, up, down} lastDirection;
@@ -25,5 +26,4 @@ private:
 	int PLAYER_UP_KEY;
 	int PLAYER_DOWN_KEY;
 	TextureManager playerTexture;
-	Image player;
 };
