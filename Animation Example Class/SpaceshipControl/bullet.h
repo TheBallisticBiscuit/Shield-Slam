@@ -11,10 +11,10 @@ class Bullet : public Entity{
 public:
 	Bullet(void);
 	bool initialize(Graphics* graphics, float startingX, float startingY, float startingXVelocity, float startingYVelocity,
-		Game* game, int width, int height, int ncols);
+		Game* game);
 	void update(float frameTime);
 	void draw(){
-		bullet.draw();
+		Entity::draw();
 	}
 	void onLostDevice(){
 
@@ -25,6 +25,4 @@ public:
 	}
 private:
 	TextureManager bulletTexture;
-	Image bullet;
-	VECTOR2 velocity;
 };

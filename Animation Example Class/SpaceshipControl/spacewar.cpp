@@ -29,10 +29,10 @@ void Spacewar::initialize(HWND hwnd)
 {
 	Game::initialize(hwnd); // throws GameError
 //<<<<<<< HEAD
-	bullet1.initialize(graphics, 0, 0, 1, 1, this, 0, 0, 1);
-	bullet2.initialize(graphics, GAME_WIDTH - 75, GAME_HEIGHT - 75, -1, -1, this, 0, 0, 1);
-	bullet3.initialize(graphics, GAME_WIDTH - 75, 0, -1, 1, this, 0, 0, 1);
-	bullet4.initialize(graphics, 0, GAME_HEIGHT - 75, 1, -1, this, 0, 0, 1);
+	bullet1.initialize(graphics, 0, 0, 1, 1, this);
+	bullet2.initialize(graphics, GAME_WIDTH - 75, GAME_HEIGHT - 75, -1, -1, this);
+	bullet3.initialize(graphics, GAME_WIDTH - 75, 0, -1, 1, this);
+	bullet4.initialize(graphics, 0, GAME_HEIGHT - 75, 1, -1, this);
 	player1.initialize(graphics, "pictures\\redsoldiersheetupdate.png", GAME_WIDTH/4, GAME_HEIGHT/2, 
 		PLAYER1_RIGHT_KEY, PLAYER1_LEFT_KEY, PLAYER1_DOWN_KEY, PLAYER1_UP_KEY,
 		this);

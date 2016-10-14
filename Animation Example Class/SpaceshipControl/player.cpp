@@ -9,8 +9,9 @@ void Player::update(float frameTime){
 	{				
 		velocity.x--;
 		setFrames(PLAYER_WALKING_RIGHT_START, PLAYER_WALKING_RIGHT_END);
-		if (getX() > GAME_WIDTH)               // if off screen right
-			setX((float)-getWidth());   // position off screen left
+		if (getX()+PLAYER_WIDTH > GAME_WIDTH) {              // if off screen right
+			setX((float)GAME_WIDTH-PLAYER_WIDTH);   // position off screen left
+		}
 		lastDirection = right;
 		lastXDirection = right;
 	}
@@ -18,23 +19,26 @@ void Player::update(float frameTime){
 	{
 		velocity.x++;
 		setFrames(PLAYER_WALKING_LEFT_START, PLAYER_WALKING_LEFT_END);
-		if (getX() < -getWidth())         // if off screen left
-			setX((float)GAME_WIDTH);           // position off screen right
+		if (getX() < 0){       // if off screen left
+			setX(0);           // position off screen right
+		}
 		lastDirection = left;
 		lastXDirection = left;
 	}
 	if(input->isKeyDown(PLAYER_DOWN_KEY)){
 		velocity.y--;
 		setFrames(PLAYER_WALKING_DOWN_START, PLAYER_WALKING_DOWN_END);
-		/*if(getY() > getHeight())
-			setY((float)GAME_HEIGHT);*/
+		if(getY()+PLAYER_HEIGHT > GAME_HEIGHT){
+			setY((float)GAME_HEIGHT-PLAYER_HEIGHT);
+		}
 		lastDirection = down;
 	}
 	if(input->isKeyDown(PLAYER_UP_KEY)){
 		velocity.y++;
 		setFrames(PLAYER_WALKING_UP_START, PLAYER_WALKING_UP_END);
-		if(getY() < 0)
+		if(getY() < 0){
 			setY(0);
+		}
 		lastDirection = up;
 	}
 	if(velocity.x == 0 && velocity.y == 0){
