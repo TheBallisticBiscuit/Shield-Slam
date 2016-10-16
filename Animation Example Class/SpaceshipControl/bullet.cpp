@@ -19,23 +19,49 @@ void Bullet::update(float frameTime){
 	D3DXVec2Normalize(&velocity, &velocity);
 	float testX = getX() + (BULLET_SPEED * velocity.x * frameTime);
 	float testY = getY() + (BULLET_SPEED * velocity.y * frameTime);
+
+
+#pragma region ScreenEdge
+	if (testX + getWidth()/2 > GAME_WIDTH) {              // if off screen right
+		setX((float)GAME_WIDTH-getWidth() - 10);   // position off screen left
+		velocity.x *= -1;
+	}
+	if (testX + 10 < 0){       // if off screen left
+		setX(0 + 20);           // position off screen right
+		velocity.x *= -1;
+	}
+	if(testY + getHeight()/2 > GAME_HEIGHT){ //If off screen bottom
+		setY((float)GAME_HEIGHT - 20);
+		velocity.y *= -1;
+	}
+	if(testY < 0){ //If off screen top
+		setY(0 + 10);
+		velocity.y *= -1;
+	}
+#pragma endregion
+
+#pragma region BulletAngle
+	if (velocity.x > 0 && velocity.y < 0) {
+		setDegrees(45);
+	}
+	if (velocity.x > 0 && velocity.y > 0) {
+		setDegrees(135);
+	}
+	if (velocity.x < 0 && velocity.y > 0) {
+		setDegrees(225);
+	}
+	if (velocity.x < 0 && velocity.y < 0) {
+		setDegrees(315);
+	}
+#pragma endregion
+
 	setX(testX);
 	setY(testY);
-	if (getX()+getWidth() > GAME_WIDTH) {              // if off screen right
-		setX((float)GAME_WIDTH-getWidth());   // position off screen left
-		velocity.x *= -1;
-	}
-	if (getX() < 0){       // if off screen left
-		setX(0);           // position off screen right
-		velocity.x *= -1;
-	}
-	if(getY()+getHeight() > GAME_HEIGHT){
-		setY((float)GAME_HEIGHT-getHeight());
-		velocity.y *= -1;
-	}
-	if(getY() < 0){
-		setY(0);
-		velocity.y *= -1;
-	}
+
 	Entity::update(frameTime);
+}
+
+void Bullet::gameOver() {
+	velocity.x = 0;
+	velocity.y = 0;
 }

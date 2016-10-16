@@ -16,6 +16,7 @@ public:
 	void draw(){
 		Entity::draw();
 	}
+	void gameOver(); //Remove if game.paused is sufficient
 	void onLostDevice(){
 
 		bulletTexture.onLostDevice();

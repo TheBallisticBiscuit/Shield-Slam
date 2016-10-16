@@ -14,13 +14,15 @@ public:
 	bool initialize(Graphics* graphics, const char* texture, float startingX, float startingY,
 		int PLAYER_RIGHT_KEY, int PLAYER_LEFT_KEY4, int PLAYER_DOWN_KEY, int PLAYER_UP_KEY,
 		Game* game);
+	void wasted(); //When player gets hit, stops his movement
+
 	void onLostDevice();
 	void onResetDevice();
 	void draw();
 private:
 	Shield playerShield;
 	enum LastDirection {left, right, up, down} lastDirection;
-	LastDirection lastXDirection;
+	LastDirection lastXDirection; //~~~ DELETE? Not being used.
 	int PLAYER_RIGHT_KEY;
 	int PLAYER_LEFT_KEY;
 	int PLAYER_UP_KEY;
