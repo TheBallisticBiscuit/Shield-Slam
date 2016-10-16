@@ -5,6 +5,7 @@
 #include "image.h"
 #include "constants.h"
 #include "entity.h"
+#include "shield.h"
 
 class Player : public Entity{
 public:
@@ -15,10 +16,9 @@ public:
 		Game* game);
 	void onLostDevice();
 	void onResetDevice();
-	void draw(){
-		Entity::draw();
-	}
+	void draw();
 private:
+	Shield playerShield;
 	enum LastDirection {left, right, up, down} lastDirection;
 	LastDirection lastXDirection;
 	int PLAYER_RIGHT_KEY;

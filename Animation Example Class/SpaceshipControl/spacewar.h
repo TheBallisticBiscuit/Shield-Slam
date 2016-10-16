@@ -25,10 +25,8 @@ private:
 	Bullet bullet2;
 	Bullet bullet3;
 	Bullet bullet4;
-//<<<<<<< HEAD
 	Player player1;
 	Player player2;
-//=======
     TextureManager greenKnightTexture;     // ship texture
     Image   greenKnight;  // ship image
 	TextureManager redKnightTexture;
@@ -37,7 +35,6 @@ private:
 	Image background;
 	enum LastDirection {left, right, up, down} greenLastDirection;
 	LastDirection redLastDirection;
-//>>>>>>> origin/Audio_&_Background
 	bool keyDownLastFrame;
 	bool keyDownThisFrame;
 

@@ -23,6 +23,9 @@ bool Player::initialize(Graphics* graphics, const char* filepath, float starting
 	lastDirection = left;
 	collisionType = entityNS::BOX;
 	isDead = false;
+	if(!playerShield.initialize(graphics, startingX, startingY, Shield::left, game)){
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Player 1 shield"));
+	}
 	return Entity::initialize(game, PLAYER_WIDTH, PLAYER_HEIGHT, PLAYER_COLS, &playerTexture);
 }
 
@@ -38,6 +41,7 @@ void Player::update(float frameTime){
 		}
 		lastDirection = right;
 		lastXDirection = right;
+		playerShield.setDirection(Shield::left);
 	}
 	if(input->isKeyDown(PLAYER_LEFT_KEY))             // if move left
 	{
@@ -48,6 +52,7 @@ void Player::update(float frameTime){
 		}
 		lastDirection = left;
 		lastXDirection = left;
+		playerShield.setDirection(Shield::right);
 	}
 	if(input->isKeyDown(PLAYER_DOWN_KEY)){
 		velocity.y--;
@@ -56,6 +61,7 @@ void Player::update(float frameTime){
 			setY((float)GAME_HEIGHT-PLAYER_HEIGHT);
 		}
 		lastDirection = down;
+		playerShield.setDirection(Shield::down);
 	}
 	if(input->isKeyDown(PLAYER_UP_KEY)){
 		velocity.y++;
@@ -64,6 +70,7 @@ void Player::update(float frameTime){
 			setY(0);
 		}
 		lastDirection = up;
+		playerShield.setDirection(Shield::up);
 	}
 	if(velocity.x == 0 && velocity.y == 0){
 		if(lastXDirection == left){
@@ -76,13 +83,21 @@ void Player::update(float frameTime){
 	D3DXVec2Normalize(&velocity, &velocity);
 	setX(getX() - frameTime * PLAYER_SPEED * velocity.x);
 	setY(getY() - frameTime * PLAYER_SPEED * velocity.y);
+	playerShield.update(frameTime, getX(), getY());
 	Entity::update(frameTime);
 }
 
 void Player::onLostDevice(){
 	playerTexture.onLostDevice();
+	playerShield.onLostDevice();
 }
 
 void Player::onResetDevice(){
 	playerTexture.onResetDevice();
+	playerShield.onResetDevice();
+}
+
+void Player::draw(){
+	playerShield.draw();
+	Entity::draw();
 }
