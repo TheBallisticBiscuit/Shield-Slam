@@ -28,7 +28,6 @@ Spacewar::~Spacewar()
 void Spacewar::initialize(HWND hwnd)
 {
 	Game::initialize(hwnd); // throws GameError
-//<<<<<<< HEAD
 	bullet1.initialize(graphics, 0, 0, 1, 1, this);
 	bullet2.initialize(graphics, GAME_WIDTH - 75, GAME_HEIGHT - 75, -1, -1, this);
 	bullet3.initialize(graphics, GAME_WIDTH - 75, 0, -1, 1, this);
@@ -39,7 +38,7 @@ void Spacewar::initialize(HWND hwnd)
 	player2.initialize(graphics, "pictures\\greensoldiersheetupdate.png", GAME_WIDTH/4+100, GAME_HEIGHT/2, 
 		PLAYER2_RIGHT_KEY, PLAYER2_LEFT_KEY, PLAYER2_DOWN_KEY, PLAYER2_UP_KEY,
 		this);
-//=======
+
 	if (!backgroundTexture.initialize(graphics, BACKGROUND_IMAGE))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Background texture"));
 	if (!background.initialize(graphics, 800,480,0, &backgroundTexture))
@@ -47,8 +46,6 @@ void Spacewar::initialize(HWND hwnd)
 	background.setScale(BACKGROUND_SCALE);
 
 	audio->playCue(BACKGROUND_MUSIC);
-
-//>>>>>>> origin/Audio_&_Background
 	return;
 }
 
