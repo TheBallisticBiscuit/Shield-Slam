@@ -78,7 +78,89 @@ void Spacewar::ai()
 // Handle collisions
 //=============================================================================
 void Spacewar::collisions()
-{}
+{
+	VECTOR2 collisionVector;
+
+#pragma region Player1Collisions
+	if (bullet1.collidesWith(player1, collisionVector))	{
+		player1.wasted();
+		bullet1.gameOver();
+		bullet2.gameOver();
+		bullet3.gameOver();
+		bullet4.gameOver();
+	}	
+	if (bullet2.collidesWith(player1, collisionVector))	{
+		player1.wasted();
+		bullet1.gameOver();
+		bullet2.gameOver();
+		bullet3.gameOver();
+		bullet4.gameOver();
+
+	}
+	if (bullet3.collidesWith(player1, collisionVector))	{
+		player1.wasted();
+		bullet1.gameOver();
+		bullet2.gameOver();
+		bullet3.gameOver();
+		bullet4.gameOver();
+
+	}
+	if (bullet4.collidesWith(player1, collisionVector))	{
+		player1.wasted();
+		bullet1.gameOver();
+		bullet2.gameOver();
+		bullet3.gameOver();
+		bullet4.gameOver();
+	}
+#pragma endregion
+
+#pragma region Player2 Collisions
+	if (bullet1.collidesWith(player2, collisionVector))	{
+		player2.wasted();
+		bullet1.gameOver();
+		bullet2.gameOver();
+		bullet3.gameOver();
+		bullet4.gameOver();
+	}	
+	if (bullet2.collidesWith(player2, collisionVector))	{
+		player2.wasted();
+		bullet1.gameOver();
+		bullet2.gameOver();
+		bullet3.gameOver();
+		bullet4.gameOver();
+
+	}
+	if (bullet3.collidesWith(player2, collisionVector))	{
+		player2.wasted();
+		bullet1.gameOver();
+		bullet2.gameOver();
+		bullet3.gameOver();
+		bullet4.gameOver();
+
+	}
+	if (bullet4.collidesWith(player2, collisionVector))	{
+		player2.wasted();
+		bullet1.gameOver();
+		bullet2.gameOver();
+		bullet3.gameOver();
+		bullet4.gameOver();
+	}
+
+	//if (bullet1.collidesWith(player2, collisionVector))	{
+	//	paused = true;
+	//}	
+	//if (bullet2.collidesWith(player2, collisionVector))	{
+	//	paused = true;
+	//}
+	//if (bullet3.collidesWith(player2, collisionVector))	{
+	//	paused = true;
+	//}
+	//if (bullet4.collidesWith(player2, collisionVector))	{
+	//	paused = true;
+	//}
+#pragma endregion
+
+}
 
 //=============================================================================
 // Render game items

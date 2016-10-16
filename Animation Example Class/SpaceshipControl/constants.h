@@ -72,9 +72,9 @@ const int PLAYER_WALKING_UP_END = 11;
 const int PLAYER_WALKING_DOWN_START = 0;
 const int PLAYER_WALKING_DOWN_END = 5;
 
-const float PLAYER_SPEED = 90.5f;
+const float PLAYER_SPEED = 120.5f;
 
-const float BULLET_SPEED = 200.0f;
+const float BULLET_SPEED = 240.0f;
 // game
 const double PI = 3.14159265;
 const float FRAME_RATE  = 200.0f;               // the target frame rate (frames/sec)

@@ -22,6 +22,10 @@ bool Player::initialize(Graphics* graphics, const char* filepath, float starting
 	lastXDirection = left;
 	lastDirection = left;
 	collisionType = entityNS::BOX;
+	edge.top = -PLAYER_HEIGHT/2;
+	edge.bottom = PLAYER_HEIGHT/2;
+	edge.left = -PLAYER_WIDTH/4;
+	edge.right = PLAYER_WIDTH/4;
 	isDead = false;
 	return Entity::initialize(game, PLAYER_WIDTH, PLAYER_HEIGHT, PLAYER_COLS, &playerTexture);
 }
@@ -29,7 +33,7 @@ bool Player::initialize(Graphics* graphics, const char* filepath, float starting
 void Player::update(float frameTime){
 	velocity.x = 0;
 	velocity.y = 0;
-	if(input->isKeyDown(PLAYER_RIGHT_KEY))            // if move right
+	if(input->isKeyDown(PLAYER_RIGHT_KEY) && isDead == false)            // if move right
 	{				
 		velocity.x--;
 		setFrames(PLAYER_WALKING_RIGHT_START, PLAYER_WALKING_RIGHT_END);
@@ -39,7 +43,7 @@ void Player::update(float frameTime){
 		lastDirection = right;
 		lastXDirection = right;
 	}
-	if(input->isKeyDown(PLAYER_LEFT_KEY))             // if move left
+	if(input->isKeyDown(PLAYER_LEFT_KEY) && isDead == false)             // if move left
 	{
 		velocity.x++;
 		setFrames(PLAYER_WALKING_LEFT_START, PLAYER_WALKING_LEFT_END);
@@ -49,7 +53,7 @@ void Player::update(float frameTime){
 		lastDirection = left;
 		lastXDirection = left;
 	}
-	if(input->isKeyDown(PLAYER_DOWN_KEY)){
+	if(input->isKeyDown(PLAYER_DOWN_KEY) && isDead == false){
 		velocity.y--;
 		setFrames(PLAYER_WALKING_DOWN_START, PLAYER_WALKING_DOWN_END);
 		if(getY()+PLAYER_HEIGHT > GAME_HEIGHT){
@@ -57,7 +61,7 @@ void Player::update(float frameTime){
 		}
 		lastDirection = down;
 	}
-	if(input->isKeyDown(PLAYER_UP_KEY)){
+	if(input->isKeyDown(PLAYER_UP_KEY) && isDead == false){
 		velocity.y++;
 		setFrames(PLAYER_WALKING_UP_START, PLAYER_WALKING_UP_END);
 		if(getY() < 0){
@@ -78,6 +82,11 @@ void Player::update(float frameTime){
 	setY(getY() - frameTime * PLAYER_SPEED * velocity.y);
 	Entity::update(frameTime);
 }
+
+void Player::wasted() {
+	isDead = true;
+}
+
 
 void Player::onLostDevice(){
 	playerTexture.onLostDevice();
