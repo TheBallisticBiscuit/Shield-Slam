@@ -73,6 +73,7 @@ void Player::update(float frameTime){
 			setFrames(PLAYER_LOOKING_RIGHT_START, PLAYER_LOOKING_RIGHT_END);
 		}
 	}
+	D3DXVec2Normalize(&velocity, &velocity);
 	setX(getX() - frameTime * PLAYER_SPEED * velocity.x);
 	setY(getY() - frameTime * PLAYER_SPEED * velocity.y);
 	Entity::update(frameTime);

@@ -16,6 +16,7 @@ bool Bullet::initialize(Graphics* graphics, float startingX, float startingY, fl
 }
 
 void Bullet::update(float frameTime){
+	D3DXVec2Normalize(&velocity, &velocity);
 	float testX = getX() + (BULLET_SPEED * velocity.x * frameTime);
 	float testY = getY() + (BULLET_SPEED * velocity.y * frameTime);
 	setX(testX);
