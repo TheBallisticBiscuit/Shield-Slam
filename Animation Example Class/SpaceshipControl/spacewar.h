@@ -14,6 +14,7 @@
 #include "image.h"
 #include "bullet.h"
 #include "player.h"
+#include "obstacle.h"
 
 //=============================================================================
 // This class is the core of the game
@@ -27,12 +28,9 @@ private:
 	Bullet bullet4;
 	Player player1;
 	Player player2;
-    TextureManager greenKnightTexture;     // ship texture
-    Image   greenKnight;  // ship image
-	TextureManager redKnightTexture;
-	Image redKnight;
 	TextureManager backgroundTexture;
 	Image background;
+	Obstacle obstacle;
 	enum LastDirection {left, right, up, down} greenLastDirection;
 	LastDirection redLastDirection;
 	bool keyDownLastFrame;

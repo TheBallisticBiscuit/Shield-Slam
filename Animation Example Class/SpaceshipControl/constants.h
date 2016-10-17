@@ -36,7 +36,7 @@ const char BACKGROUND_IMAGE[] = "pictures\\Background1.png";
 const char CLASS_NAME[] = "Shield Slam";
 const char GAME_TITLE[] = "Shield Slam";
 const bool FULLSCREEN = false;              // windowed or fullscreen
-const UINT GAME_WIDTH =  800;               // width of game in pixels
+const UINT GAME_WIDTH =  640;               // width of game in pixels
 const UINT GAME_HEIGHT = 480;               // height of game in pixels
 
 const float PLAYER_ANIMATION_DELAY = 0.2f;    // time between frames of ship animation
@@ -99,4 +99,9 @@ const UCHAR PLAYER1_UP_KEY = 0x57;
 const UCHAR PLAYER1_DOWN_KEY = 0x53;
 
 const float SHIELD_SCALE = 0.3;
+
+const float OBSTACLE_SCALE_1 = 1.0f;
+const float OBSTACLE_HEIGHT = 649/11;
+const float OBSTACLE_WIDTH = 236;
+const float OBSTACLE_ANIMATION_DELAY = 0.1f;
 #endif

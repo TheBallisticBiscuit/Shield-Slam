@@ -9,7 +9,7 @@ bool Shield::initialize(Graphics* graphics, float startingX, float startingY, La
 	edge.left = -getWidth();
 	edge.right = getWidth();
 	edge.bottom = getHeight();
-	edge.top = -getWidth();
+	edge.top = -getHeight();
 	mass = 2000;
 	shieldDirection = startingDirection;
 	setDegrees(90);

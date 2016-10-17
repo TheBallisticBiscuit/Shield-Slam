@@ -41,10 +41,11 @@ void Spacewar::initialize(HWND hwnd)
 
 	if (!backgroundTexture.initialize(graphics, BACKGROUND_IMAGE))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Background texture"));
-	if (!background.initialize(graphics, 800,480,0, &backgroundTexture))
+	if (!background.initialize(graphics, GAME_WIDTH, GAME_HEIGHT,0, &backgroundTexture))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Background image"));
 	background.setScale(BACKGROUND_SCALE);
-
+	if (!obstacle.initialize(graphics, ((GAME_WIDTH/2) - (OBSTACLE_WIDTH/2)), GAME_HEIGHT/2, this))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing obstacle texture"));
 	audio->playCue(BACKGROUND_MUSIC);
 	return;
 }
@@ -66,6 +67,7 @@ void Spacewar::update()
 	bullet2.update(frameTime);
 	bullet3.update(frameTime);
 	bullet4.update(frameTime);
+	obstacle.update(frameTime);
 }
 
 //=============================================================================
@@ -168,12 +170,10 @@ void Spacewar::collisions()
 void Spacewar::render()
 {
 	graphics->spriteBegin();                // begin drawing sprites
-//<<<<<<< HEAD
 	background.draw();
+	obstacle.draw();
 	player1.draw();                            // add the spacejpo to the scene
 	player2.draw();
-//=======
-//>>>>>>> origin/Audio_&_Background
 	bullet1.draw();
 	bullet2.draw();
 	bullet3.draw();
@@ -193,6 +193,7 @@ void Spacewar::releaseAll()
 	player2.onLostDevice();
 //=======
 	backgroundTexture.onLostDevice();
+	obstacle.onLostDevice();
 //>>>>>>> origin/Audio_&_Background
 	bullet1.onLostDevice();
 	bullet2.onLostDevice();
@@ -212,8 +213,7 @@ void Spacewar::resetAll()
 	player2.onResetDevice();
 //=======
 	backgroundTexture.onResetDevice();
-	greenKnightTexture.onResetDevice();
-	redKnightTexture.onResetDevice();
+	obstacle.onResetDevice();
 //>>>>>>> origin/Audio_&_Background
 	bullet1.onResetDevice();
 	bullet2.onResetDevice();

@@ -8,9 +8,8 @@ bool Player::initialize(Graphics* graphics, const char* filepath, float starting
 	if (!playerTexture.initialize(graphics, filepath))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Player 1 texture"));
 
-	/*if (!player.initialize(graphics, 256/4, 384/6, PLAYER_COLS, &playerTexture))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Player 1"));*/
-	setX(startingX);                    // start above and left of planet
+
+	setX(startingX);                   
 	setY(startingY);
 	setFrames(PLAYER_LOOKING_RIGHT_START, PLAYER_LOOKING_RIGHT_END);   // animation frames
 	setCurrentFrame(PLAYER_LOOKING_RIGHT_START);     // starting frame
