@@ -8,7 +8,7 @@ bool Player::initialize(Graphics* graphics, const char* filepath, float starting
 	if (!playerTexture.initialize(graphics, filepath))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Player 1 texture"));
 
-
+	active = false;
 
 	setX(startingX);                   
 	setY(startingY);

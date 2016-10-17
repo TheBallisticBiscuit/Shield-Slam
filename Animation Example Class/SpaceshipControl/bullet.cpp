@@ -4,6 +4,7 @@ Bullet::Bullet(void){};
 
 bool Bullet::initialize(Graphics* graphics, float startingX, float startingY, float startingXVelocity, float startingYVelocity, 
 						Game* game){
+
 		if (!bulletTexture.initialize(graphics,"pictures\\bullet.png")){
 			throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing bullet texture"));
 		}
@@ -25,6 +26,7 @@ void Bullet::update(float frameTime){
 
 
 #pragma region ScreenEdge
+<<<<<<< HEAD
 	if (testX + getWidth()*BULLET_SCALING > GAME_WIDTH+20) {              // if off screen right
 		setX((float)GAME_WIDTH-getWidth()*BULLET_SCALING);   // position off screen left
 		if(velocity.x > 0){
@@ -48,6 +50,27 @@ void Bullet::update(float frameTime){
 		if(velocity.y < 0){
 			velocity.y *= -1;
 		}
+=======
+	if (testX > GAME_WIDTH) {              // if off screen right
+		setX((float)GAME_WIDTH);   // position off screen left
+		if (velocity.x > 0)
+			velocity.x *= -1;
+	}
+	if (testX < 0){       // if off screen left
+		setX(0);           // position off screen right
+		if (velocity.x < 0)
+			velocity.x *= -1;
+	}
+	if(testY + getWidth()*BULLET_SCALING > GAME_HEIGHT){ //If off screen bottom
+		setY((float)GAME_HEIGHT);
+		if (velocity.y > 0)
+			velocity.y *= -1;
+	}
+	if(testY < 0){ //If off screen top
+		setY(0 + 10);
+		if (velocity.y < 0)
+			velocity.y *= -1;
+>>>>>>> origin/Bullet_and_Player_Collision
 	}
 #pragma endregion
 

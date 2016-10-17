@@ -8,8 +8,8 @@ bool Obstacle::initialize(Graphics* graphics, float startingX, float startingY, 
 	setFrameDelay(OBSTACLE_ANIMATION_DELAY); 
 	mass = 1000000;
 	collisionType = entityNS::BOX;
-	edge.top = -OBSTACLE_HEIGHT/2;
-	edge.bottom = OBSTACLE_HEIGHT/2;
+	edge.top = -OBSTACLE_HEIGHT/2+20;
+	edge.bottom = OBSTACLE_HEIGHT/2-20;
 	edge.left = -OBSTACLE_WIDTH/2+20;
 	edge.right = OBSTACLE_WIDTH/2-20;
 	if(!obstacle.initialize(graphics, "pictures\\animatedWall.png")){
