@@ -4,17 +4,18 @@ Bullet::Bullet(void){};
 
 bool Bullet::initialize(Graphics* graphics, float startingX, float startingY, float startingXVelocity, float startingYVelocity, 
 						Game* game){
-	if (!bulletTexture.initialize(graphics,"pictures\\bullet.png"))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing bullet texture"));
-	setX(startingX);
-	setY(startingY);
-	setScale(0.6);
-	mass = 1;
-	velocity.x = startingXVelocity;
-	velocity.y = startingYVelocity;
-	collisionType = entityNS::CIRCLE;
-	radius = 30;
-	return Entity::initialize(game, 0, 0, 0, &bulletTexture);
+		if (!bulletTexture.initialize(graphics,"pictures\\bullet.png")){
+			throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing bullet texture"));
+		}
+		setX(startingX);
+		setY(startingY);
+		setScale(BULLET_SCALING);
+		mass = 1;
+		velocity.x = startingXVelocity;
+		velocity.y = startingYVelocity;
+		collisionType = entityNS::CIRCLE;
+		radius = 15;
+		return Entity::initialize(game, 0, 0, 0, &bulletTexture);
 }
 
 void Bullet::update(float frameTime){
@@ -24,21 +25,29 @@ void Bullet::update(float frameTime){
 
 
 #pragma region ScreenEdge
-	if (testX + getWidth()/2 > GAME_WIDTH) {              // if off screen right
-		setX((float)GAME_WIDTH-getWidth() - 10);   // position off screen left
-		velocity.x *= -1;
+	if (testX + getWidth()*BULLET_SCALING > GAME_WIDTH+20) {              // if off screen right
+		setX((float)GAME_WIDTH-getWidth()*BULLET_SCALING);   // position off screen left
+		if(velocity.x > 0){
+			velocity.x *= -1;
+		}
 	}
-	if (testX + 10 < 0){       // if off screen left
-		setX(0 + 20);           // position off screen right
-		velocity.x *= -1;
+	if (testX < 0-20){       // if off screen left
+		setX(0);           // position off screen right
+		if(velocity.x < 0){
+			velocity.x *= -1;
+		}
 	}
-	if(testY + getHeight()/2 > GAME_HEIGHT){ //If off screen bottom
-		setY((float)GAME_HEIGHT - 20);
-		velocity.y *= -1;
+	if(testY + getHeight()*BULLET_SCALING > GAME_HEIGHT+20){ //If off screen bottom
+		setY((float)GAME_HEIGHT-getHeight()*BULLET_SCALING);
+		if(velocity.y > 0){
+			velocity.y *= -1;
+		}
 	}
-	if(testY < 0){ //If off screen top
-		setY(0 + 10);
-		velocity.y *= -1;
+	if(testY < 0-20){ //If off screen top
+		setY(0);
+		if(velocity.y < 0){
+			velocity.y *= -1;
+		}
 	}
 #pragma endregion
 

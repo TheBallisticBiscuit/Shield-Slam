@@ -8,10 +8,10 @@ bool Obstacle::initialize(Graphics* graphics, float startingX, float startingY, 
 	setFrameDelay(OBSTACLE_ANIMATION_DELAY); 
 	mass = 1000000;
 	collisionType = entityNS::BOX;
-	edge.left = -OBSTACLE_WIDTH/2+10;
-	edge.right = OBSTACLE_WIDTH/2-10;
-	edge.top = -OBSTACLE_HEIGHT/2+30;
-	edge.bottom = OBSTACLE_HEIGHT/2-30;
+	edge.top = -OBSTACLE_HEIGHT/2;
+	edge.bottom = OBSTACLE_HEIGHT/2;
+	edge.left = -OBSTACLE_WIDTH/2+20;
+	edge.right = OBSTACLE_WIDTH/2-20;
 	if(!obstacle.initialize(graphics, "pictures\\animatedWall.png")){
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing obstacle texture"));
 	}

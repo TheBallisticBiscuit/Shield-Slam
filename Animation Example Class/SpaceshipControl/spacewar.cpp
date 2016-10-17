@@ -47,6 +47,9 @@ void Spacewar::initialize(HWND hwnd)
 	if (!obstacle.initialize(graphics, ((GAME_WIDTH/2) - (OBSTACLE_WIDTH/2)), GAME_HEIGHT/2, this))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing obstacle texture"));
 	audio->playCue(BACKGROUND_MUSIC);
+	//player1.setActive(false);
+	//player2.setActive(false);
+	//obstacle.setActive(false);
 	return;
 }
 
