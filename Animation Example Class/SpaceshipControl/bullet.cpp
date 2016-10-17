@@ -8,7 +8,7 @@ bool Bullet::initialize(Graphics* graphics, float startingX, float startingY, fl
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing bullet texture"));
 	setX(startingX);
 	setY(startingY);
-	setScale(0.6);
+	setScale(BULLET_SCALING);
 	mass = 1;
 	velocity.x = startingXVelocity;
 	velocity.y = startingYVelocity;
@@ -24,21 +24,25 @@ void Bullet::update(float frameTime){
 
 
 #pragma region ScreenEdge
-	if (testX + getWidth()/2 > GAME_WIDTH) {              // if off screen right
-		setX((float)GAME_WIDTH-getWidth() - 10);   // position off screen left
-		velocity.x *= -1;
+	if (testX > GAME_WIDTH) {              // if off screen right
+		setX((float)GAME_WIDTH);   // position off screen left
+		if (velocity.x > 0)
+			velocity.x *= -1;
 	}
-	if (testX + 10 < 0){       // if off screen left
-		setX(0 + 20);           // position off screen right
-		velocity.x *= -1;
+	if (testX < 0){       // if off screen left
+		setX(0);           // position off screen right
+		if (velocity.x < 0)
+			velocity.x *= -1;
 	}
-	if(testY + getHeight()/2 > GAME_HEIGHT){ //If off screen bottom
-		setY((float)GAME_HEIGHT - 20);
-		velocity.y *= -1;
+	if(testY + getWidth()*BULLET_SCALING > GAME_HEIGHT){ //If off screen bottom
+		setY((float)GAME_HEIGHT);
+		if (velocity.y > 0)
+			velocity.y *= -1;
 	}
 	if(testY < 0){ //If off screen top
 		setY(0 + 10);
-		velocity.y *= -1;
+		if (velocity.y < 0)
+			velocity.y *= -1;
 	}
 #pragma endregion
 
