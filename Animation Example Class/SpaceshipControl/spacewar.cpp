@@ -32,10 +32,10 @@ void Spacewar::initialize(HWND hwnd)
 	bullet2.initialize(graphics, GAME_WIDTH - 75, GAME_HEIGHT - 75, -1, -1, this);
 	bullet3.initialize(graphics, GAME_WIDTH - 75, 0, -1, 1, this);
 	bullet4.initialize(graphics, 0, GAME_HEIGHT - 75, 1, -1, this);
-	player1.initialize(graphics, "pictures\\redsoldiersheetupdate.png", GAME_WIDTH/4, GAME_HEIGHT/2, 
+	player1.initialize(graphics, "pictures\\redsoldiersheetupdate.png", 100, GAME_HEIGHT/2, 
 		PLAYER1_RIGHT_KEY, PLAYER1_LEFT_KEY, PLAYER1_DOWN_KEY, PLAYER1_UP_KEY,
 		this);
-	player2.initialize(graphics, "pictures\\greensoldiersheetupdate.png", GAME_WIDTH/4+100, GAME_HEIGHT/2, 
+	player2.initialize(graphics, "pictures\\greensoldiersheetupdate.png", GAME_WIDTH-100, GAME_HEIGHT/2, 
 		PLAYER2_RIGHT_KEY, PLAYER2_LEFT_KEY, PLAYER2_DOWN_KEY, PLAYER2_UP_KEY,
 		this);
 
@@ -162,6 +162,68 @@ void Spacewar::collisions()
 	//}
 #pragma endregion
 
+#pragma region Shield 1 Collisions
+	//if (bullet1.collidesWith(player1.playerShield, collisionVector)) {
+	//	bullet1.bounce(collisionVector, player1.playerShield);
+	//}
+	//if (bullet2.collidesWith(player1.playerShield, collisionVector)) {
+	//	bullet2.bounce(collisionVector, player1.playerShield);
+	//}
+	//if (bullet3.collidesWith(player1.playerShield, collisionVector)) {
+	//	bullet3.bounce(collisionVector, player1.playerShield);
+	//}
+	//if (bullet4.collidesWith(player1.playerShield, collisionVector)) {
+	//	bullet4.bounce(collisionVector, player1.playerShield);
+	//}
+	if (player1.playerShield.collidesWith(bullet1, collisionVector)) {
+		bullet1.bounce(collisionVector, player1.playerShield);
+	}
+	if (player1.playerShield.collidesWith(bullet2, collisionVector)) {
+		bullet2.bounce(collisionVector, player1.playerShield);
+	}
+	if (player1.playerShield.collidesWith(bullet3, collisionVector)) {
+		bullet3.bounce(collisionVector, player1.playerShield);
+	}
+	if (player1.playerShield.collidesWith(bullet4, collisionVector)) {
+		bullet4.bounce(collisionVector, player1.playerShield);
+	}
+#pragma endregion
+
+#pragma region Shield 2 Collisions
+	if (bullet1.collidesWith(player2.playerShield, collisionVector)) {
+		bullet1.bounce(collisionVector, player2.playerShield);
+	}
+	if (bullet2.collidesWith(player2.playerShield, collisionVector)) {
+		bullet2.bounce(collisionVector, player2.playerShield);
+	}
+	if (bullet3.collidesWith(player2.playerShield, collisionVector)) {
+		bullet3.bounce(collisionVector, player2.playerShield);
+	}
+	if (bullet4.collidesWith(player2.playerShield, collisionVector)) {
+		bullet4.bounce(collisionVector, player2.playerShield);
+	}
+#pragma endregion
+
+#pragma region Obstacle Collision
+	if(bullet1.collidesWith(obstacle, collisionVector)){
+		bullet1.bounce(collisionVector, obstacle);
+	}
+	if(bullet2.collidesWith(obstacle, collisionVector)){
+		bullet2.bounce(collisionVector, obstacle);
+	}
+	if(bullet3.collidesWith(obstacle, collisionVector)){
+		bullet3.bounce(collisionVector, obstacle);
+	}
+	if(bullet4.collidesWith(obstacle, collisionVector)){
+		bullet4.bounce(collisionVector, obstacle);
+	}
+	if(player1.collidesWith(obstacle, collisionVector)){
+		player1.bounce(collisionVector, obstacle);
+	}
+	if(player2.collidesWith(obstacle, collisionVector)){
+		player2.bounce(collisionVector, obstacle);
+	}
+#pragma endregion
 }
 
 //=============================================================================
@@ -188,13 +250,13 @@ void Spacewar::render()
 void Spacewar::releaseAll()
 {
 	Game::releaseAll();
-//<<<<<<< HEAD
+
 	player1.onLostDevice();
 	player2.onLostDevice();
-//=======
+
 	backgroundTexture.onLostDevice();
 	obstacle.onLostDevice();
-//>>>>>>> origin/Audio_&_Background
+
 	bullet1.onLostDevice();
 	bullet2.onLostDevice();
 	bullet3.onLostDevice();
@@ -208,13 +270,13 @@ void Spacewar::releaseAll()
 //=============================================================================
 void Spacewar::resetAll()
 {
-//<<<<<<< HEAD
+
 	player1.onResetDevice();
 	player2.onResetDevice();
-//=======
+
 	backgroundTexture.onResetDevice();
 	obstacle.onResetDevice();
-//>>>>>>> origin/Audio_&_Background
+
 	bullet1.onResetDevice();
 	bullet2.onResetDevice();
 	bullet3.onResetDevice();

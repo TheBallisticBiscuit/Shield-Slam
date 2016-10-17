@@ -9,6 +9,7 @@ bool Player::initialize(Graphics* graphics, const char* filepath, float starting
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Player 1 texture"));
 
 
+
 	setX(startingX);                   
 	setY(startingY);
 	setFrames(PLAYER_LOOKING_RIGHT_START, PLAYER_LOOKING_RIGHT_END);   // animation frames
@@ -23,8 +24,8 @@ bool Player::initialize(Graphics* graphics, const char* filepath, float starting
 	collisionType = entityNS::BOX;
 	edge.top = -PLAYER_HEIGHT/2;
 	edge.bottom = PLAYER_HEIGHT/2;
-	edge.left = -PLAYER_WIDTH/4;
-	edge.right = PLAYER_WIDTH/4;
+	edge.left = -PLAYER_WIDTH/4+20;
+	edge.right = PLAYER_WIDTH/4-20;
 	isDead = false;
 	if(!playerShield.initialize(graphics, startingX, startingY, Shield::left, game)){
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Player 1 shield"));
@@ -35,6 +36,7 @@ bool Player::initialize(Graphics* graphics, const char* filepath, float starting
 void Player::update(float frameTime){
 	velocity.x = 0;
 	velocity.y = 0;
+
 	if(input->isKeyDown(PLAYER_RIGHT_KEY) && isDead == false)            // if move right
 	{				
 		velocity.x--;
@@ -93,7 +95,6 @@ void Player::update(float frameTime){
 void Player::wasted() {
 	isDead = true;
 }
-
 
 void Player::onLostDevice(){
 	playerTexture.onLostDevice();

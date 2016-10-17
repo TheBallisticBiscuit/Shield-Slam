@@ -9,9 +9,11 @@ bool Bullet::initialize(Graphics* graphics, float startingX, float startingY, fl
 	setX(startingX);
 	setY(startingY);
 	setScale(0.6);
+	mass = 1;
 	velocity.x = startingXVelocity;
 	velocity.y = startingYVelocity;
 	collisionType = entityNS::CIRCLE;
+	radius = 30;
 	return Entity::initialize(game, 0, 0, 0, &bulletTexture);
 }
 

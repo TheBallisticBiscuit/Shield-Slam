@@ -72,6 +72,10 @@ const int PLAYER_WALKING_UP_END = 11;
 const int PLAYER_WALKING_DOWN_START = 0;
 const int PLAYER_WALKING_DOWN_END = 5;
 
+//Shield 
+const int SHIELD_WIDTH = 256;
+const int SHIELD_HEIGHT = 76;
+
 const float PLAYER_SPEED = 120.5f;
 
 const float BULLET_SPEED = 240.0f;
@@ -100,7 +104,7 @@ const UCHAR PLAYER1_DOWN_KEY = 0x53;
 
 const float SHIELD_SCALE = 0.3;
 
-const float OBSTACLE_SCALE_1 = 1.0f;
+const float OBSTACLE_SCALE = 1.0f;
 const float OBSTACLE_HEIGHT = 649/11;
 const float OBSTACLE_WIDTH = 236;
 const float OBSTACLE_ANIMATION_DELAY = 0.1f;
