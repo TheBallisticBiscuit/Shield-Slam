@@ -82,6 +82,7 @@ const float PLAYER_SPEED = 120.5f;
 const float BULLET_SPEED = 240.0f;
 const float BULLET_SCALING = 0.6f;
 
+
 // game
 const double PI = 3.14159265;
 const float FRAME_RATE  = 200.0f;               // the target frame rate (frames/sec)
