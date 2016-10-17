@@ -72,6 +72,10 @@ const int PLAYER_WALKING_UP_END = 11;
 const int PLAYER_WALKING_DOWN_START = 0;
 const int PLAYER_WALKING_DOWN_END = 5;
 
+//Shield 
+const int SHIELD_WIDTH = 256;
+const int SHIELD_HEIGHT = 76;
+
 const float PLAYER_SPEED = 120.5f;
 
 const float BULLET_SPEED = 240.0f;

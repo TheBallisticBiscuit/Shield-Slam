@@ -5,15 +5,17 @@ bool Shield::initialize(Graphics* graphics, float startingX, float startingY, La
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing bullet texture"));
 	setX(startingX);
 	setY(startingY);
-	collisionType = entityNS::BOX;
-	edge.left = -getWidth();
-	edge.right = getWidth();
-	edge.bottom = getHeight();
-	edge.top = -getWidth();
+	collisionType = entityNS::ROTATED_BOX;
+	edge.left = -(SHIELD_WIDTH)/2;
+	edge.right = (SHIELD_WIDTH)/2;
+	edge.bottom = (SHIELD_HEIGHT)/2;
+	edge.top = -(SHIELD_HEIGHT)/2;
+	velocity.x = 0;
+	velocity.y = 0;
 	mass = 2000;
 	shieldDirection = startingDirection;
 	setDegrees(90);
-	setX(getX()+15);
+	setX(getX() + 15);
 	setY(getY() + 20);
 	setScale(SHIELD_SCALE);
 	return Entity::initialize(game, 0, 0, 0, &shieldTexture);
@@ -40,6 +42,7 @@ void Shield::update(float frameTime, float playerX, float playerY){
 		setX(playerX-7);
 		setY(playerY+PLAYER_HEIGHT-10);
 	}
+	computeRotatedBox();
 }
 
 void Shield::setDirection(LastDirection newDirection){

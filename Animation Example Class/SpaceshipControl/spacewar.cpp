@@ -160,6 +160,47 @@ void Spacewar::collisions()
 	//}
 #pragma endregion
 
+#pragma region Shield 1 Collisions
+	//if (bullet1.collidesWith(player1.playerShield, collisionVector)) {
+	//	bullet1.bounce(collisionVector, player1.playerShield);
+	//}
+	//if (bullet2.collidesWith(player1.playerShield, collisionVector)) {
+	//	bullet2.bounce(collisionVector, player1.playerShield);
+	//}
+	//if (bullet3.collidesWith(player1.playerShield, collisionVector)) {
+	//	bullet3.bounce(collisionVector, player1.playerShield);
+	//}
+	//if (bullet4.collidesWith(player1.playerShield, collisionVector)) {
+	//	bullet4.bounce(collisionVector, player1.playerShield);
+	//}
+	if (player1.playerShield.collidesWith(bullet1, collisionVector)) {
+		bullet1.bounce(collisionVector, player1.playerShield);
+	}
+	if (player1.playerShield.collidesWith(bullet2, collisionVector)) {
+		bullet2.bounce(collisionVector, player1.playerShield);
+	}
+	if (player1.playerShield.collidesWith(bullet3, collisionVector)) {
+		bullet3.bounce(collisionVector, player1.playerShield);
+	}
+	if (player1.playerShield.collidesWith(bullet4, collisionVector)) {
+		bullet4.bounce(collisionVector, player1.playerShield);
+	}
+#pragma endregion
+
+#pragma region Shield 2 Collisions
+	if (bullet1.collidesWith(player2.playerShield, collisionVector)) {
+		bullet1.bounce(collisionVector, player2.playerShield);
+	}
+	if (bullet2.collidesWith(player2.playerShield, collisionVector)) {
+		bullet2.bounce(collisionVector, player2.playerShield);
+	}
+	if (bullet3.collidesWith(player2.playerShield, collisionVector)) {
+		bullet3.bounce(collisionVector, player2.playerShield);
+	}
+	if (bullet4.collidesWith(player2.playerShield, collisionVector)) {
+		bullet4.bounce(collisionVector, player2.playerShield);
+	}
+#pragma endregion
 }
 
 //=============================================================================
