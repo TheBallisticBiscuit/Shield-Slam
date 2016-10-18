@@ -18,12 +18,12 @@ public:
 	bool itHitShield(VECTOR2 collisionVec);
 	void wasted(); //When player gets hit, stops his movement
 	void respawn(float spawnX); //Sets them back to alive and resets their position
-
 	void onLostDevice();
 	void onResetDevice();
 	void draw();
 	bool isPlayerDead();
 	Shield playerShield;
+	int getShieldDirection();
 private:
 	enum LastDirection {left, right, up, down} lastDirection;
 	LastDirection lastXDirection; //~~~ DELETE? Not being used.

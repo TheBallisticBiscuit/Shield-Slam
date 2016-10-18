@@ -71,3 +71,25 @@ void Bullet::gameOver() {
 	velocity.x = 0;
 	velocity.y = 0;
 }
+
+void Bullet::reflect(int shieldDirection, Entity& ent){
+	VECTOR2 reflectVel = ent.getVelocity();
+		if(shieldDirection == 0 || shieldDirection == 1){
+			velocity.x *= -1;
+			if(getX() > ent.getX()){ //left side
+				setX(ent.getX()+ent.getWidth()-20);
+			}
+			else if(getX() < ent.getX()){
+				setX(ent.getX()-ent.getWidth()+20);
+			}
+		}
+		else{
+			velocity.y *= -1;
+			if(getY() > ent.getY()){
+				setY(ent.getY()+ent.getHeight()-20);
+			}
+			else if(getY() < ent.getY()){
+				setY(ent.getY()-ent.getHeight()+20);
+			}
+		}
+	}

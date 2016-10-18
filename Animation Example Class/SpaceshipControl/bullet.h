@@ -4,6 +4,7 @@
 #include "image.h"
 #include "constants.h"
 #include "entity.h"
+#include "player.h"
 
 
 
@@ -24,6 +25,7 @@ public:
 	void onResetDevice(){
 		bulletTexture.onResetDevice();
 	}
+	void reflect(int shieldDirection, Entity& ent);
 private:
 	TextureManager bulletTexture;
 };

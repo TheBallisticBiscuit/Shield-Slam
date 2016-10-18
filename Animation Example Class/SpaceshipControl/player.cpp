@@ -159,3 +159,7 @@ void Player::draw(){
 bool Player::isPlayerDead(){
 	return isDead;
 }
+
+int Player::getShieldDirection(){
+	return playerShield.getDirection();
+}
