@@ -250,7 +250,7 @@ void Spacewar::collisions()
 	for(int i = 0; i < NUM_BULLETS; i++){
 		if(bullets[i].collidesWith(player1, collisionVector)){
 			if (player1.itHitShield(collisionVector)){
-				bullets[i].bounce(collisionVector, player1);
+				bullets[i].reflect(player1.getShieldDirection(), player1);
 				if(!player1.isPlayerDead()){
 					audio->playCue(LASER_SOUND);
 				}
@@ -267,7 +267,7 @@ void Spacewar::collisions()
 	for(int i = 0; i < NUM_BULLETS; i++){
 		if(bullets[i].collidesWith(player2, collisionVector)){
 			if (player2.itHitShield(collisionVector)){
-				bullets[i].bounce(collisionVector, player2);
+				bullets[i].reflect(player2.getShieldDirection(), player2);
 				if(!player2.isPlayerDead()){
 					audio->playCue(LASER_SOUND);
 				}
@@ -291,6 +291,14 @@ void Spacewar::collisions()
 					bullets[i].bounce(collisionVector, lvl2Obstacles[j]);
 					audio->playCue(LASER_SOUND);
 			}
+		}
+	}
+	for(int j = 0; j < 4; j++){
+		if(player1.collidesWith(lvl2Obstacles[j], collisionVector)){
+			player1.bounce(collisionVector, lvl2Obstacles[j]);
+		}
+		if(player2.collidesWith(lvl2Obstacles[j], collisionVector)){
+			player2.bounce(collisionVector, lvl2Obstacles[j]);
 		}
 	}
 #pragma endregion
