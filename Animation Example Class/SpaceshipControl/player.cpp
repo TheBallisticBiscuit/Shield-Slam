@@ -16,6 +16,7 @@ bool Player::initialize(Graphics* graphics, const char* filepath, float starting
 	PLAYER_LEFT_KEY = leftKey;
 	PLAYER_DOWN_KEY = downKey;
 	PLAYER_UP_KEY = upKey;
+
 	PLAYER_LOCK_KEY = lockKey;
 	lastXDirection = left;
 	lastDirection = left;
@@ -25,6 +26,7 @@ bool Player::initialize(Graphics* graphics, const char* filepath, float starting
 	edge.left = -PLAYER_WIDTH/2+20;
 	edge.right = PLAYER_WIDTH/2-20;
 	mass = 6000;
+	score = 0;
 	isDead = false;
 	if(!playerShield.initialize(graphics, startingX, startingY, Shield::left, game)){
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Player 1 shield"));
@@ -158,4 +160,12 @@ void Player::draw(){
 
 bool Player::isPlayerDead(){
 	return isDead;
+}
+
+int Player::getScore() {
+	return score;
+}
+
+void Player::addScore() {
+	score++;
 }

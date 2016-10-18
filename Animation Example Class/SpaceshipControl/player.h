@@ -19,11 +19,15 @@ public:
 	void wasted(); //When player gets hit, stops his movement
 	void respawn(float spawnX); //Sets them back to alive and resets their position
 
+	int getScore();
+	void addScore();
+	bool isPlayerDead();
+
+	Shield playerShield;
+
 	void onLostDevice();
 	void onResetDevice();
 	void draw();
-	bool isPlayerDead();
-	Shield playerShield;
 private:
 	enum LastDirection {left, right, up, down} lastDirection;
 	LastDirection lastXDirection; //~~~ DELETE? Not being used.
@@ -35,4 +39,5 @@ private:
 	TextureManager playerTexture;
 	bool isDead;
 	bool shieldLock;
+	int score;
 };

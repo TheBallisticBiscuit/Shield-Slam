@@ -15,6 +15,7 @@
 #include "bullet.h"
 #include "player.h"
 #include "obstacle.h"
+#include "textDX.h"
 
 //=============================================================================
 // This class is the core of the game
@@ -32,6 +33,10 @@ private:
 	TextureManager backgroundTexture;
 	Image background;
 	Obstacle obstacle;
+
+	TextDX score;
+	TextDX deathText;
+
 	enum LastDirection {left, right, up, down} greenLastDirection;
 	LastDirection redLastDirection;
 	bool keyDownLastFrame;

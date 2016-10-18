@@ -28,6 +28,7 @@ Spacewar::~Spacewar()
 void Spacewar::initialize(HWND hwnd)
 {
 	Game::initialize(hwnd); // throws GameError
+#pragma region Bullet Initialize
 	for(int i = 0; i < NUM_BULLETS; i++){
 		if(i % 4 == 0){
 			bullets[i].initialize(graphics,BULLET_SPAWN_1_X, BULLET_SPAWN_1_Y, 1, 1, this);
@@ -46,6 +47,7 @@ void Spacewar::initialize(HWND hwnd)
 			bullets[i].setVisible(false);
 		}
 	}
+#pragma endregion
 	player1.initialize(graphics, "pictures\\redsoldiersheetupdate.png", PLAYER1_SPAWN_X, GAME_HEIGHT/2, 
 		PLAYER1_RIGHT_KEY, PLAYER1_LEFT_KEY, PLAYER1_DOWN_KEY, PLAYER1_UP_KEY, PLAYER1_LOCK_KEY,
 		this);
@@ -60,13 +62,17 @@ void Spacewar::initialize(HWND hwnd)
 	background.setScale(BACKGROUND_SCALE);
 	if (!obstacle.initialize(graphics, ((GAME_WIDTH/2) - (OBSTACLE_WIDTH/2)), GAME_HEIGHT/2, this))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing obstacle texture"));
+
+	if (score.initialize(graphics, 40, 1, 0, "Times New Roman") == false) 
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Score Text"));
+
 	audio->playCue(BACKGROUND_MUSIC);
 	gameClock = 0;
 	hardMode = false;
 	insanityMode = false;
 	deathMode = false;
-	player1.setActive(false);
-	player2.setActive(false);
+	//player1.setActive(false);
+	//player2.setActive(false);
 	return;
 }
 
@@ -201,6 +207,8 @@ void Spacewar::update()
 		deathMode++;
 	}
 #pragma endregion
+
+
 	player1.update(frameTime);
 	player2.update(frameTime);
 	for(int i = 0; i < NUM_BULLETS; i++){
@@ -232,6 +240,9 @@ void Spacewar::collisions()
 				}
 			}
 			else{
+				if (!player1.isPlayerDead()) {
+					player2.addScore();
+				}
 				player1.wasted();
 				gameOver();
 			}
@@ -249,6 +260,9 @@ void Spacewar::collisions()
 				}
 			}
 			else{
+				if (!player2.isPlayerDead()){
+					player1.addScore();
+				}
 				player2.wasted();
 				gameOver();
 			}
@@ -279,6 +293,12 @@ void Spacewar::render()
 	for(int i = 0; i < NUM_BULLETS; i++){
 		bullets[i].draw();
 	}
+
+	score.setFontColor(graphicsNS::RED);
+	score.print("Score: " + std::to_string(player1.getScore()), 40, 525);
+	score.setFontColor(graphicsNS::B_GREEN);
+	score.print("Score: " + std::to_string(player2.getScore()), 850, 525);
+
 	graphics->spriteEnd();                  // end drawing sprites
 }
 
