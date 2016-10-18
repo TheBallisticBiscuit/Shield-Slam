@@ -109,7 +109,6 @@ void Spacewar::collisions()
 			bullet4.gameOver();	
 		}
 
-
 	}
 	if (bullet3.collidesWith(player1, collisionVector))	{
 		if (player1.itHitShield(collisionVector))
@@ -190,15 +189,19 @@ void Spacewar::collisions()
 #pragma region Obstacle Collision
 	if(bullet1.collidesWith(obstacle, collisionVector)){
 		bullet1.bounce(collisionVector, obstacle);
+		audio->playCue(BOUNCE_SOUND);
 	}
 	if(bullet2.collidesWith(obstacle, collisionVector)){
 		bullet2.bounce(collisionVector, obstacle);
+		audio->playCue(BOUNCE_SOUND);
 	}
 	if(bullet3.collidesWith(obstacle, collisionVector)){
 		bullet3.bounce(collisionVector, obstacle);
+		audio->playCue(BOUNCE_SOUND);
 	}
 	if(bullet4.collidesWith(obstacle, collisionVector)){
 		bullet4.bounce(collisionVector, obstacle);
+		audio->playCue(BOUNCE_SOUND);
 	}
 	if(player1.collidesWith(obstacle, collisionVector)){
 		player1.bounce(collisionVector, obstacle);

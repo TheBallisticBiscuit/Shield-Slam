@@ -53,6 +53,9 @@ const char BEEP2[] = "beep2";
 const char BEEP3[] = "beep3";
 const char BEEP4[] = "beep4";
 const char HIT[]   = "hit";
+const char BOUNCE_SOUND[] = "BounceSound";
+const char LASER_SOUND[] = "LaserSound";
+const char DEATH[] = "Death";
 
 //Player 1 Cel
 const int  PLAYER_COLS = 6;
@@ -107,7 +110,7 @@ const UCHAR PLAYER1_UP_KEY = 0x57;
 const UCHAR PLAYER1_DOWN_KEY = 0x53;
 const UCHAR PLAYER1_LOCK_KEY = 0x10;
 
-const float SHIELD_SCALE = 0.23;
+const float SHIELD_SCALE = 0.24;
 
 const float OBSTACLE_SCALE = 1.0f;
 const float OBSTACLE_HEIGHT = 649/11;

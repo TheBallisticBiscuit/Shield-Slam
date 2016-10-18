@@ -3,34 +3,33 @@
 Player::Player(void){}
 
 bool Player::initialize(Graphics* graphics, const char* filepath, float startingX, float startingY,
-						int rightKey, int leftKey, int downKey, int upKey, int lockKey,
-						Game* game){
-							if (!playerTexture.initialize(graphics, filepath))
-								throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Player 1 texture"));
-
-							setX(startingX);                   
-							setY(startingY);
-							setFrames(PLAYER_LOOKING_RIGHT_START, PLAYER_LOOKING_RIGHT_END);   // animation frames
-							setCurrentFrame(PLAYER_LOOKING_RIGHT_START);     // starting frame
-							setFrameDelay(PLAYER_ANIMATION_DELAY);
-							PLAYER_RIGHT_KEY = rightKey;
-							PLAYER_LEFT_KEY = leftKey;
-							PLAYER_DOWN_KEY = downKey;
-							PLAYER_UP_KEY = upKey;
-							PLAYER_LOCK_KEY = lockKey;
-							lastXDirection = left;
-							lastDirection = left;
-							collisionType = entityNS::BOX;
-							edge.top = -PLAYER_HEIGHT/2;
-							edge.bottom = PLAYER_HEIGHT/2;
-							edge.left = -PLAYER_WIDTH/2+20;
-							edge.right = PLAYER_WIDTH/2-20;
-							mass = 6000;
-							isDead = false;
-							if(!playerShield.initialize(graphics, startingX, startingY, Shield::left, game)){
-								throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Player 1 shield"));
-							}
-							return Entity::initialize(game, PLAYER_WIDTH, PLAYER_HEIGHT, PLAYER_COLS, &playerTexture);
+	int rightKey, int leftKey, int downKey, int upKey, int lockKey, Game* game){
+	if (!playerTexture.initialize(graphics, filepath)) {
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Player 1 texture"));
+	}
+	setX(startingX);                   
+	setY(startingY);
+	setFrames(PLAYER_LOOKING_RIGHT_START, PLAYER_LOOKING_RIGHT_END);   // animation frames
+	setCurrentFrame(PLAYER_LOOKING_RIGHT_START);     // starting frame
+	setFrameDelay(PLAYER_ANIMATION_DELAY);
+	PLAYER_RIGHT_KEY = rightKey;
+	PLAYER_LEFT_KEY = leftKey;
+	PLAYER_DOWN_KEY = downKey;
+	PLAYER_UP_KEY = upKey;
+	PLAYER_LOCK_KEY = lockKey;
+	lastXDirection = left;
+	lastDirection = left;
+	collisionType = entityNS::BOX;
+	edge.top = -PLAYER_HEIGHT/2;
+	edge.bottom = PLAYER_HEIGHT/2;
+	edge.left = -PLAYER_WIDTH/2+20;
+	edge.right = PLAYER_WIDTH/2-20;
+	mass = 6000;
+	isDead = false;
+	if(!playerShield.initialize(graphics, startingX, startingY, Shield::left, game)){
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Player 1 shield"));
+	}
+	return Entity::initialize(game, PLAYER_WIDTH, PLAYER_HEIGHT, PLAYER_COLS, &playerTexture);
 }
 
 void Player::update(float frameTime){
@@ -104,50 +103,22 @@ void Player::update(float frameTime){
 }
 
 bool Player::itHitShield(VECTOR2 collisionVec) { //Returns true if the bullet hit the shield, false otherwise				
-	//if (abs(collisionVec.x) > abs(collisionVec.y)) { //X-Axis hit
-	//	if (collisionVec.x < 0) { //Hit on right side
-	//		if (playerShield.getDirection() == 1)
-	//			return true;
-	//		else
-	//			return false;
-	//	}
-	//	else  if(collisionVec.x > 0){					//Hit on left side
-	//		if (playerShield.getDirection() == 0)
-	//			return true;
-	//		else 
-	//			return false;
-	//	}
-	//}
-	//else { //Y-Axis hit
-	//	if (collisionVec.y > 0) { //Hit from above
-	//		if (playerShield.getDirection() == 2)
-	//			return true;
-	//		else
-	//			return false;
-	//	}
-	//	else if (collisionVec.y < 0){				//Hit from below
-	//		if (playerShield.getDirection() == 3)
-	//			return true;
-	//		else
-	//			return false;
-	//	}
-	//}
-	if(playerShield.getDirection() == 1){
+	if(playerShield.getDirection() == 1){ //Right
 		if(collisionVec.x < 0){
 			return true;
 		}
 	}
-	else if (playerShield.getDirection() == 0){
+	else if (playerShield.getDirection() == 0){ //Left
 		if(collisionVec.x > 0){
 			return true;
 		}
 	}
-	else if(playerShield.getDirection() == 2){
+	else if(playerShield.getDirection() == 2){ //Up
 		if(collisionVec.y > 0){
 			return true;
 		}
 	}
-	else if(playerShield.getDirection() == 3){
+	else if(playerShield.getDirection() == 3){ //Down
 		if(collisionVec.y < 0){
 			return true;
 		}
@@ -157,6 +128,10 @@ bool Player::itHitShield(VECTOR2 collisionVec) { //Returns true if the bullet hi
 
 
 void Player::wasted() {
+	if (isDead == false) {
+	audio->playCue(DEATH);
+	}
+
 	isDead = true;
 }
 

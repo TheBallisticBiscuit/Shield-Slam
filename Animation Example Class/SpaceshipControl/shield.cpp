@@ -32,20 +32,19 @@ void Shield::update(float frameTime, float playerX, float playerY){
 	}
 	else if(shieldDirection == right){
 		setDegrees(90);
-		setX(playerX+25);
+		setX(playerX+12);
 		setY(playerY+25);
 	}
 	else if(shieldDirection == up){
 		setDegrees(0);
-		setX(playerX+7);
-		setY(playerY-15);
+		setX(playerX+1);
+		setY(playerY-5);
 	}
 	else if(shieldDirection == down){
 		setDegrees(180);
-		setX(playerX+7);
-		setY(playerY+PLAYER_HEIGHT-10);
+		setX(playerX+1);
+		setY(playerY+PLAYER_HEIGHT-15);
 	}
-	computeRotatedBox();
 }
 
 void Shield::setDirection(LastDirection newDirection){
