@@ -58,15 +58,32 @@ void Spacewar::initialize(HWND hwnd)
 	if (!background.initialize(graphics, GAME_WIDTH, GAME_HEIGHT,0, &backgroundTexture))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Background image"));
 	background.setScale(BACKGROUND_SCALE);
-	if (!obstacle.initialize(graphics, ((GAME_WIDTH/2) - (OBSTACLE_WIDTH/2)), GAME_HEIGHT/2, this))
+	if (!lvl1Obstacle.initialize(graphics, ((GAME_WIDTH/2) - (OBSTACLE_WIDTH/2)), GAME_HEIGHT/2, this))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing obstacle texture"));
+#pragma region Initializing level 2
+	if (!lvl2Obstacles[0].initialize(graphics, ((GAME_WIDTH/4) - (OBSTACLE_WIDTH/2)), GAME_HEIGHT/4, this))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing obstacle texture"));
+	lvl2Obstacles[0].setActive(false);
+	lvl2Obstacles[0].setVisible(false);
+	if (!lvl2Obstacles[1].initialize(graphics, ((GAME_WIDTH/4) - (OBSTACLE_WIDTH/2)), (GAME_HEIGHT-(GAME_HEIGHT/4)), this))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing obstacle texture"));
+	lvl2Obstacles[1].setActive(false);
+	lvl2Obstacles[1].setVisible(false);
+	if (!lvl2Obstacles[2].initialize(graphics, ((GAME_WIDTH-GAME_WIDTH/4) - (OBSTACLE_WIDTH/2)), (GAME_HEIGHT-(GAME_HEIGHT/4)), this))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing obstacle texture"));
+	lvl2Obstacles[2].setActive(false);
+	lvl2Obstacles[2].setVisible(false);
+	if (!lvl2Obstacles[3].initialize(graphics, ((GAME_WIDTH-GAME_WIDTH/4) - (OBSTACLE_WIDTH/2)), GAME_HEIGHT/4, this))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing obstacle texture"));
+	lvl2Obstacles[3].setActive(false);
+	lvl2Obstacles[3].setVisible(false);
+#pragma endregion
 	audio->playCue(BACKGROUND_MUSIC);
 	gameClock = 0;
 	hardMode = false;
 	insanityMode = false;
 	deathMode = false;
-	player1.setActive(false);
-	player2.setActive(false);
+	level = 0;
 	return;
 }
 
@@ -123,7 +140,7 @@ void Spacewar::update()
 #pragma endregion
 
 #pragma region Insanity mode
-		if(gameClock >= 20 && !insanityMode){
+	if(gameClock >= 20 && !insanityMode){
 		VECTOR2 bullet1Start(1, 1);
 		VECTOR2 bullet2Start(-1, -1);
 		VECTOR2 bullet3Start(-1, 1);
@@ -163,7 +180,7 @@ void Spacewar::update()
 #pragma endregion
 
 #pragma region Death mode
-		if(gameClock >= 30 && !deathMode){
+	if(gameClock >= 30 && !deathMode){
 		VECTOR2 bullet1Start(1, 1);
 		VECTOR2 bullet2Start(-1, -1);
 		VECTOR2 bullet3Start(-1, 1);
@@ -206,8 +223,15 @@ void Spacewar::update()
 	for(int i = 0; i < NUM_BULLETS; i++){
 		bullets[i].update(frameTime);
 	}
-	obstacle.update(frameTime);
+	lvl1Obstacle.update(frameTime);
+	for(int i = 0; i < 4; i++){
+		lvl2Obstacles[i].update(frameTime);
+	}
 	gameClock += frameTime;
+	if(player1.isPlayerDead() || player2.isPlayerDead()){
+		Sleep(3000);
+		nextLevel();
+	}
 }
 
 //=============================================================================
@@ -258,9 +282,15 @@ void Spacewar::collisions()
 
 #pragma region Obstacle Collision
 	for(int i = 0; i < NUM_BULLETS; i++){
-		if(bullets[i].collidesWith(obstacle, collisionVector)){
-			bullets[i].bounce(collisionVector, obstacle);
+		if(bullets[i].collidesWith(lvl1Obstacle, collisionVector)){
+			bullets[i].bounce(collisionVector, lvl1Obstacle);
 			audio->playCue(LASER_SOUND);
+		}
+			for(int j = 0; j < 4; j++){
+				if(bullets[i].collidesWith(lvl2Obstacles[j], collisionVector)){
+					bullets[i].bounce(collisionVector, lvl2Obstacles[j]);
+					audio->playCue(LASER_SOUND);
+			}
 		}
 	}
 #pragma endregion
@@ -273,11 +303,14 @@ void Spacewar::render()
 {
 	graphics->spriteBegin();                // begin drawing sprites
 	background.draw();
-	obstacle.draw();
+	lvl1Obstacle.draw();
 	player1.draw();                            // add the spacejpo to the scene
 	player2.draw();
 	for(int i = 0; i < NUM_BULLETS; i++){
 		bullets[i].draw();
+	}
+	for(int i = 0; i < 4; i++){
+		lvl2Obstacles[i].draw();
 	}
 	graphics->spriteEnd();                  // end drawing sprites
 }
@@ -294,10 +327,13 @@ void Spacewar::releaseAll()
 	player2.onLostDevice();
 
 	backgroundTexture.onLostDevice();
-	obstacle.onLostDevice();
+	lvl1Obstacle.onLostDevice();
 
 	for(int i = 0; i < NUM_BULLETS; i++){
 		bullets[i].onLostDevice();
+	}
+	for(int i = 0; i < 4; i++){
+		lvl2Obstacles[i].onLostDevice();
 	}
 	return;
 }
@@ -313,10 +349,13 @@ void Spacewar::resetAll()
 	player2.onResetDevice();
 
 	backgroundTexture.onResetDevice();
-	obstacle.onResetDevice();
+	lvl1Obstacle.onResetDevice();
 
 	for(int i = 0; i < NUM_BULLETS; i++){
 		bullets[i].onResetDevice();
+	}
+	for(int i = 0; i < 4; i++){
+		lvl2Obstacles[i].onResetDevice();
 	}
 	Game::resetAll();
 	return;
@@ -344,9 +383,9 @@ void Spacewar::reset(){
 			bullets[i].setVelocity(bullet3Start);
 		}
 		else if(i % 4 == 3){
-			bullets[i].setX(BULLET_SPAWN_3_X);
-			bullets[i].setY(BULLET_SPAWN_3_Y);
-			bullets[i].setVelocity(bullet3Start);
+			bullets[i].setX(BULLET_SPAWN_4_X);
+			bullets[i].setY(BULLET_SPAWN_4_Y);
+			bullets[i].setVelocity(bullet4Start);
 		}
 		if(i >= 4){
 			bullets[i].setActive(false);
@@ -366,5 +405,36 @@ void Spacewar::reset(){
 void Spacewar::gameOver(){
 	for(int i = 0; i < NUM_BULLETS; i++){
 		bullets[i].gameOver();
+	}
+}
+
+void Spacewar::nextLevel(){
+	level++;
+	if(level % 3 == 0){ //level 1
+		lvl1Obstacle.activate();
+		lvl1Obstacle.setVisible(true);
+		for(int i = 0; i < 4; i++){
+			lvl2Obstacles[i].setActive(false);
+			lvl2Obstacles[i].setVisible(false);
+		}
+		reset();
+	}
+	else if(level % 3 == 1){ //level 2
+		for(int i = 0; i < 4; i++){
+			lvl2Obstacles[i].activate();
+			lvl2Obstacles[i].setVisible(true);
+		}
+		lvl1Obstacle.setActive(false);
+		lvl1Obstacle.setVisible(false);
+		reset();
+	}
+	else if(level % 3 == 2){ //level 3
+		lvl1Obstacle.activate();
+		lvl1Obstacle.setVisible(true);
+		for(int i = 0; i < 4; i++){
+			lvl2Obstacles[i].activate();
+			lvl2Obstacles[i].setVisible(true);
+		}
+		reset();
 	}
 }

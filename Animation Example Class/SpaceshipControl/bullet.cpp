@@ -11,7 +11,7 @@ bool Bullet::initialize(Graphics* graphics, float startingX, float startingY, fl
 		setX(startingX);
 		setY(startingY);
 		setScale(BULLET_SCALING);
-		mass = 0.001;
+		mass = 0.00001;
 		velocity.x = startingXVelocity;
 		velocity.y = startingYVelocity;
 		collisionType = entityNS::CIRCLE;

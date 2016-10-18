@@ -22,16 +22,13 @@
 class Spacewar : public Game
 {
 private:
-	//Bullet bullet1;
-	//Bullet bullet2;
-	//Bullet bullet3;
-	//Bullet bullet4;
 	Bullet bullets[16];
 	Player player1;
 	Player player2;
 	TextureManager backgroundTexture;
 	Image background;
-	Obstacle obstacle;
+	Obstacle lvl1Obstacle;
+	Obstacle lvl2Obstacles[4];
 	enum LastDirection {left, right, up, down} greenLastDirection;
 	LastDirection redLastDirection;
 	bool keyDownLastFrame;
@@ -40,6 +37,7 @@ private:
 	bool hardMode;
 	bool insanityMode;
 	bool deathMode;
+	int level;
 
 
 public:
@@ -59,6 +57,7 @@ public:
     void resetAll();
 	void reset();
 	void gameOver();
+	void nextLevel();
 };
 
 #endif

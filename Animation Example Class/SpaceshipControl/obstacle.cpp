@@ -1,7 +1,7 @@
 #include "obstacle.h"
 
 bool Obstacle::initialize(Graphics* graphics, float startingX, float startingY, Game* game){
-	setX(startingX);                    // start above and left of planet
+	setX(startingX);                    
 	setY(startingY);
 	setFrames(0, 10);
 	setCurrentFrame(0);
