@@ -28,6 +28,7 @@ Spacewar::~Spacewar()
 void Spacewar::initialize(HWND hwnd)
 {
 	Game::initialize(hwnd); // throws GameError
+#pragma region Bullet Initialize
 	for(int i = 0; i < NUM_BULLETS; i++){
 		if(i % 4 == 0){
 			bullets[i].initialize(graphics,BULLET_SPAWN_1_X, BULLET_SPAWN_1_Y, 1, 1, this);
@@ -46,6 +47,7 @@ void Spacewar::initialize(HWND hwnd)
 			bullets[i].setVisible(false);
 		}
 	}
+#pragma endregion
 	player1.initialize(graphics, "pictures\\redsoldiersheetupdate.png", PLAYER1_SPAWN_X, GAME_HEIGHT/2, 
 		PLAYER1_RIGHT_KEY, PLAYER1_LEFT_KEY, PLAYER1_DOWN_KEY, PLAYER1_UP_KEY, PLAYER1_LOCK_KEY,
 		this);
@@ -78,6 +80,10 @@ void Spacewar::initialize(HWND hwnd)
 	lvl2Obstacles[3].setActive(false);
 	lvl2Obstacles[3].setVisible(false);
 #pragma endregion
+
+	if (score.initialize(graphics, 40, 1, 0, "Times New Roman") == false) 
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Score Text"));
+
 	audio->playCue(BACKGROUND_MUSIC);
 	gameClock = 0;
 	hardMode = false;
@@ -218,6 +224,8 @@ void Spacewar::update()
 		deathMode++;
 	}
 #pragma endregion
+
+
 	player1.update(frameTime);
 	player2.update(frameTime);
 	for(int i = 0; i < NUM_BULLETS; i++){
@@ -256,6 +264,9 @@ void Spacewar::collisions()
 				}
 			}
 			else{
+				if (!player1.isPlayerDead()) {
+					player2.addScore();
+				}
 				player1.wasted();
 				gameOver();
 			}
@@ -273,6 +284,9 @@ void Spacewar::collisions()
 				}
 			}
 			else{
+				if (!player2.isPlayerDead()){
+					player1.addScore();
+				}
 				player2.wasted();
 				gameOver();
 			}
@@ -320,6 +334,11 @@ void Spacewar::render()
 	for(int i = 0; i < 4; i++){
 		lvl2Obstacles[i].draw();
 	}
+
+	score.setFontColor(graphicsNS::RED);
+	score.print("Score: " + std::to_string(player1.getScore()), 40, 525);
+	score.setFontColor(graphicsNS::B_GREEN);
+	score.print("Score: " + std::to_string(player2.getScore()), 850, 525);
 	graphics->spriteEnd();                  // end drawing sprites
 }
 

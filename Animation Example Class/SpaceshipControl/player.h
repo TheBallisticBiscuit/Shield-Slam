@@ -24,6 +24,8 @@ public:
 	bool isPlayerDead();
 	Shield playerShield;
 	int getShieldDirection();
+	int getScore();
+	void addScore();
 private:
 	enum LastDirection {left, right, up, down} lastDirection;
 	LastDirection lastXDirection; //~~~ DELETE? Not being used.
@@ -35,4 +37,5 @@ private:
 	TextureManager playerTexture;
 	bool isDead;
 	bool shieldLock;
+	int score;
 };
