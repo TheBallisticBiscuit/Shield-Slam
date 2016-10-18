@@ -12,7 +12,7 @@ public:
 	Player(void);
 	void update(float frameTime);
 	bool initialize(Graphics* graphics, const char* texture, float startingX, float startingY,
-		int PLAYER_RIGHT_KEY, int PLAYER_LEFT_KEY4, int PLAYER_DOWN_KEY, int PLAYER_UP_KEY,
+		int rightKey, int leftKey, int downKey, int upKey, int lockKey,
 		Game* game);
 
 	bool itHitShield(VECTOR2 collisionVec);
@@ -30,6 +30,8 @@ private:
 	int PLAYER_LEFT_KEY;
 	int PLAYER_UP_KEY;
 	int PLAYER_DOWN_KEY;
+	int PLAYER_LOCK_KEY;
 	TextureManager playerTexture;
 	bool isDead;
+	bool shieldLock;
 };

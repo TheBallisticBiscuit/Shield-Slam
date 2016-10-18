@@ -33,10 +33,10 @@ void Spacewar::initialize(HWND hwnd)
 	bullet3.initialize(graphics, GAME_WIDTH - 75, 0, -1, 1, this);
 	bullet4.initialize(graphics, 0, GAME_HEIGHT - 75, 1, -1, this);
 	player1.initialize(graphics, "pictures\\redsoldiersheetupdate.png", 100, GAME_HEIGHT/2, 
-		PLAYER1_RIGHT_KEY, PLAYER1_LEFT_KEY, PLAYER1_DOWN_KEY, PLAYER1_UP_KEY,
+		PLAYER1_RIGHT_KEY, PLAYER1_LEFT_KEY, PLAYER1_DOWN_KEY, PLAYER1_UP_KEY, PLAYER1_LOCK_KEY,
 		this);
 	player2.initialize(graphics, "pictures\\greensoldiersheetupdate.png", GAME_WIDTH-100, GAME_HEIGHT/2, 
-		PLAYER2_RIGHT_KEY, PLAYER2_LEFT_KEY, PLAYER2_DOWN_KEY, PLAYER2_UP_KEY,
+		PLAYER2_RIGHT_KEY, PLAYER2_LEFT_KEY, PLAYER2_DOWN_KEY, PLAYER2_UP_KEY, PLAYER2_LOCK_KEY,
 		this);
 
 	if (!backgroundTexture.initialize(graphics, BACKGROUND_IMAGE))
@@ -48,7 +48,7 @@ void Spacewar::initialize(HWND hwnd)
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing obstacle texture"));
 	audio->playCue(BACKGROUND_MUSIC);
 	//player1.setActive(false);
-	player2.setActive(false);
+	//player2.setActive(false);
 	//obstacle.setActive(false); 
 	return;
 }
@@ -90,123 +90,101 @@ void Spacewar::collisions()
 	if (bullet1.collidesWith(player1, collisionVector))	{
 		if (player1.itHitShield(collisionVector))
 			bullet1.bounce(collisionVector, player1);
-		else
+		else{
 			player1.wasted();
 			bullet1.gameOver();
 			bullet2.gameOver();
 			bullet3.gameOver();
 			bullet4.gameOver();			
+		}
 	}	
 	if (bullet2.collidesWith(player1, collisionVector))	{
 		if (player1.itHitShield(collisionVector))
 			bullet2.bounce(collisionVector, player1);
-		else
+		else{
 			player1.wasted();
+			bullet1.gameOver();
+			bullet2.gameOver();
+			bullet3.gameOver();
+			bullet4.gameOver();	
+		}
 
 
 	}
 	if (bullet3.collidesWith(player1, collisionVector))	{
 		if (player1.itHitShield(collisionVector))
 			bullet3.bounce(collisionVector, player1);
-		else
+		else{
 			player1.wasted();
-
+			bullet1.gameOver();
+			bullet2.gameOver();
+			bullet3.gameOver();
+			bullet4.gameOver();	
+		}
 	}
 	if (bullet4.collidesWith(player1, collisionVector))	{
-		player1.wasted();
-		bullet1.gameOver();
-		bullet2.gameOver();
-		bullet3.gameOver();
-		bullet4.gameOver();
+		if(player1.itHitShield(collisionVector)){
+			bullet4.bounce(collisionVector, player1);
+		}
+		else{
+			player1.wasted();
+			bullet1.gameOver();
+			bullet2.gameOver();
+			bullet3.gameOver();
+			bullet4.gameOver();
+		}
 	}
 #pragma endregion
 
 #pragma region Player2 Collisions
 	if (bullet1.collidesWith(player2, collisionVector))	{
-		player2.wasted();
-		bullet1.gameOver();
-		bullet2.gameOver();
-		bullet3.gameOver();
-		bullet4.gameOver();
+		if (player2.itHitShield(collisionVector))
+			bullet1.bounce(collisionVector, player2);
+		else{
+			player2.wasted();
+			bullet1.gameOver();
+			bullet2.gameOver();
+			bullet3.gameOver();
+			bullet4.gameOver();			
+		}
 	}	
 	if (bullet2.collidesWith(player2, collisionVector))	{
-		player2.wasted();
-		bullet1.gameOver();
-		bullet2.gameOver();
-		bullet3.gameOver();
-		bullet4.gameOver();
+		if (player2.itHitShield(collisionVector))
+			bullet2.bounce(collisionVector, player2);
+		else{
+			player2.wasted();
+			bullet1.gameOver();
+			bullet2.gameOver();
+			bullet3.gameOver();
+			bullet4.gameOver();	
+		}
+
 
 	}
 	if (bullet3.collidesWith(player2, collisionVector))	{
-		player2.wasted();
-		bullet1.gameOver();
-		bullet2.gameOver();
-		bullet3.gameOver();
-		bullet4.gameOver();
-
+		if (player2.itHitShield(collisionVector))
+			bullet3.bounce(collisionVector, player2);
+		else{
+			player2.wasted();
+			bullet1.gameOver();
+			bullet2.gameOver();
+			bullet3.gameOver();
+			bullet4.gameOver();	
+		}
 	}
 	if (bullet4.collidesWith(player2, collisionVector))	{
+		if(player2.itHitShield(collisionVector)){
+			bullet4.bounce(collisionVector, player2);
+		}
+		else{
 		player2.wasted();
 		bullet1.gameOver();
 		bullet2.gameOver();
 		bullet3.gameOver();
 		bullet4.gameOver();
+		}
 	}
 
-	//if (bullet1.collidesWith(player2, collisionVector))	{
-	//	paused = true;
-	//}	
-	//if (bullet2.collidesWith(player2, collisionVector))	{
-	//	paused = true;
-	//}
-	//if (bullet3.collidesWith(player2, collisionVector))	{
-	//	paused = true;
-	//}
-	//if (bullet4.collidesWith(player2, collisionVector))	{
-	//	paused = true;
-	//}
-#pragma endregion
-
-#pragma region Shield 1 Collisions
-	//if (bullet1.collidesWith(player1.playerShield, collisionVector)) {
-	//	bullet1.bounce(collisionVector, player1.playerShield);
-	//}
-	//if (bullet2.collidesWith(player1.playerShield, collisionVector)) {
-	//	bullet2.bounce(collisionVector, player1.playerShield);
-	//}
-	//if (bullet3.collidesWith(player1.playerShield, collisionVector)) {
-	//	bullet3.bounce(collisionVector, player1.playerShield);
-	//}
-	//if (bullet4.collidesWith(player1.playerShield, collisionVector)) {
-	//	bullet4.bounce(collisionVector, player1.playerShield);
-	//}
-	if (player1.playerShield.collidesWith(bullet1, collisionVector)) {
-		bullet1.bounce(collisionVector, player1.playerShield);
-	}
-	if (player1.playerShield.collidesWith(bullet2, collisionVector)) {
-		bullet2.bounce(collisionVector, player1.playerShield);
-	}
-	if (player1.playerShield.collidesWith(bullet3, collisionVector)) {
-		bullet3.bounce(collisionVector, player1.playerShield);
-	}
-	if (player1.playerShield.collidesWith(bullet4, collisionVector)) {
-		bullet4.bounce(collisionVector, player1.playerShield);
-	}
-#pragma endregion
-
-#pragma region Shield 2 Collisions
-	if (bullet1.collidesWith(player2.playerShield, collisionVector)) {
-		bullet1.bounce(collisionVector, player2.playerShield);
-	}
-	if (bullet2.collidesWith(player2.playerShield, collisionVector)) {
-		bullet2.bounce(collisionVector, player2.playerShield);
-	}
-	if (bullet3.collidesWith(player2.playerShield, collisionVector)) {
-		bullet3.bounce(collisionVector, player2.playerShield);
-	}
-	if (bullet4.collidesWith(player2.playerShield, collisionVector)) {
-		bullet4.bounce(collisionVector, player2.playerShield);
-	}
 #pragma endregion
 
 #pragma region Obstacle Collision

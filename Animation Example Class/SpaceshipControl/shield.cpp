@@ -27,22 +27,22 @@ bool Shield::initialize(Graphics* graphics, float startingX, float startingY, La
 void Shield::update(float frameTime, float playerX, float playerY){
 	if(shieldDirection == left){
 		setDegrees(270);
-		setX(playerX-30);
-		setY(playerY+20);
+		setX(playerX-10);
+		setY(playerY+25);
 	}
 	else if(shieldDirection == right){
 		setDegrees(90);
-		setX(playerX+15);
-		setY(playerY+20);
+		setX(playerX+25);
+		setY(playerY+25);
 	}
 	else if(shieldDirection == up){
 		setDegrees(0);
-		setX(playerX-7);
+		setX(playerX+7);
 		setY(playerY-15);
 	}
 	else if(shieldDirection == down){
 		setDegrees(180);
-		setX(playerX-7);
+		setX(playerX+7);
 		setY(playerY+PLAYER_HEIGHT-10);
 	}
 	computeRotatedBox();

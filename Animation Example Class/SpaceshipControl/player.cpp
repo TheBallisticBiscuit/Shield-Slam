@@ -3,38 +3,43 @@
 Player::Player(void){}
 
 bool Player::initialize(Graphics* graphics, const char* filepath, float startingX, float startingY,
-		int rightKey, int leftKey, int downKey, int upKey,
-		Game* game){
-	if (!playerTexture.initialize(graphics, filepath))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Player 1 texture"));
+						int rightKey, int leftKey, int downKey, int upKey, int lockKey,
+						Game* game){
+							if (!playerTexture.initialize(graphics, filepath))
+								throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Player 1 texture"));
 
-	setX(startingX);                   
-	setY(startingY);
-	setFrames(PLAYER_LOOKING_RIGHT_START, PLAYER_LOOKING_RIGHT_END);   // animation frames
-	setCurrentFrame(PLAYER_LOOKING_RIGHT_START);     // starting frame
-	setFrameDelay(PLAYER_ANIMATION_DELAY);
-	PLAYER_RIGHT_KEY = rightKey;
-	PLAYER_LEFT_KEY = leftKey;
-	PLAYER_DOWN_KEY = downKey;
-	PLAYER_UP_KEY = upKey;
-	lastXDirection = left;
-	lastDirection = left;
-	collisionType = entityNS::BOX;
-	edge.top = -PLAYER_HEIGHT/2;
-	edge.bottom = PLAYER_HEIGHT/2;
-	edge.left = -PLAYER_WIDTH/2;
-	edge.right = PLAYER_WIDTH/2;
-	isDead = false;
-	if(!playerShield.initialize(graphics, startingX, startingY, Shield::left, game)){
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Player 1 shield"));
-	}
-	return Entity::initialize(game, PLAYER_WIDTH, PLAYER_HEIGHT, PLAYER_COLS, &playerTexture);
+							setX(startingX);                   
+							setY(startingY);
+							setFrames(PLAYER_LOOKING_RIGHT_START, PLAYER_LOOKING_RIGHT_END);   // animation frames
+							setCurrentFrame(PLAYER_LOOKING_RIGHT_START);     // starting frame
+							setFrameDelay(PLAYER_ANIMATION_DELAY);
+							PLAYER_RIGHT_KEY = rightKey;
+							PLAYER_LEFT_KEY = leftKey;
+							PLAYER_DOWN_KEY = downKey;
+							PLAYER_UP_KEY = upKey;
+							PLAYER_LOCK_KEY = lockKey;
+							lastXDirection = left;
+							lastDirection = left;
+							collisionType = entityNS::BOX;
+							edge.top = -PLAYER_HEIGHT/2;
+							edge.bottom = PLAYER_HEIGHT/2;
+							edge.left = -PLAYER_WIDTH/2+20;
+							edge.right = PLAYER_WIDTH/2-20;
+							mass = 6000;
+							isDead = false;
+							if(!playerShield.initialize(graphics, startingX, startingY, Shield::left, game)){
+								throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Player 1 shield"));
+							}
+							return Entity::initialize(game, PLAYER_WIDTH, PLAYER_HEIGHT, PLAYER_COLS, &playerTexture);
 }
 
 void Player::update(float frameTime){
 	velocity.x = 0;
 	velocity.y = 0;
-
+	shieldLock = false;
+	if(input->isKeyDown(PLAYER_LOCK_KEY) && isDead == false){
+		shieldLock = true;
+	}
 	if(input->isKeyDown(PLAYER_RIGHT_KEY) && isDead == false)            // if move right
 	{				
 		velocity.x--;
@@ -44,7 +49,9 @@ void Player::update(float frameTime){
 		}
 		lastDirection = right;
 		lastXDirection = right;
-		playerShield.setDirection(Shield::right);
+		if(!shieldLock){
+			playerShield.setDirection(Shield::right);
+		}
 	}
 	if(input->isKeyDown(PLAYER_LEFT_KEY) && isDead == false)             // if move left
 	{
@@ -55,7 +62,9 @@ void Player::update(float frameTime){
 		}
 		lastDirection = left;
 		lastXDirection = left;
-		playerShield.setDirection(Shield::left);
+		if(!shieldLock){
+			playerShield.setDirection(Shield::left);
+		}
 	}
 	if(input->isKeyDown(PLAYER_DOWN_KEY) && isDead == false){
 		velocity.y--;
@@ -64,7 +73,9 @@ void Player::update(float frameTime){
 			setY((float)GAME_HEIGHT-PLAYER_HEIGHT);
 		}
 		lastDirection = down;
-		playerShield.setDirection(Shield::down);
+		if(!shieldLock){
+			playerShield.setDirection(Shield::down);
+		}
 	}
 	if(input->isKeyDown(PLAYER_UP_KEY) && isDead == false){
 		velocity.y++;
@@ -73,7 +84,9 @@ void Player::update(float frameTime){
 			setY(0);
 		}
 		lastDirection = up;
-		playerShield.setDirection(Shield::up);
+		if(!shieldLock){
+			playerShield.setDirection(Shield::up);
+		}
 	}
 	if(velocity.x == 0 && velocity.y == 0){
 		if(lastXDirection == left){
@@ -91,34 +104,55 @@ void Player::update(float frameTime){
 }
 
 bool Player::itHitShield(VECTOR2 collisionVec) { //Returns true if the bullet hit the shield, false otherwise				
-	if (abs(collisionVec.x) > abs(collisionVec.y)) { //X-Axis hit
-		if (collisionVec.x < 0) { //Hit on right side
-			if (playerShield.getDirection() == 1)
-				return true;
-			else
-				return false;
-		}
-		else {					//Hit on left side
-			if (playerShield.getDirection() == 0)
-				return true;
-			else 
-				return false;
+	//if (abs(collisionVec.x) > abs(collisionVec.y)) { //X-Axis hit
+	//	if (collisionVec.x < 0) { //Hit on right side
+	//		if (playerShield.getDirection() == 1)
+	//			return true;
+	//		else
+	//			return false;
+	//	}
+	//	else  if(collisionVec.x > 0){					//Hit on left side
+	//		if (playerShield.getDirection() == 0)
+	//			return true;
+	//		else 
+	//			return false;
+	//	}
+	//}
+	//else { //Y-Axis hit
+	//	if (collisionVec.y > 0) { //Hit from above
+	//		if (playerShield.getDirection() == 2)
+	//			return true;
+	//		else
+	//			return false;
+	//	}
+	//	else if (collisionVec.y < 0){				//Hit from below
+	//		if (playerShield.getDirection() == 3)
+	//			return true;
+	//		else
+	//			return false;
+	//	}
+	//}
+	if(playerShield.getDirection() == 1){
+		if(collisionVec.x < 0){
+			return true;
 		}
 	}
-	else { //Y-Axis hit
-		if (collisionVec.y > 0) { //Hit from above
-			if (playerShield.getDirection() == 2)
-				return true;
-			else
-				return false;
-		}
-		else {				//Hit from below
-			if (playerShield.getDirection() == 3)
-				return true;
-			else
-				return false;
+	else if (playerShield.getDirection() == 0){
+		if(collisionVec.x > 0){
+			return true;
 		}
 	}
+	else if(playerShield.getDirection() == 2){
+		if(collisionVec.y > 0){
+			return true;
+		}
+	}
+	else if(playerShield.getDirection() == 3){
+		if(collisionVec.y < 0){
+			return true;
+		}
+	}
+	return false;
 }
 
 

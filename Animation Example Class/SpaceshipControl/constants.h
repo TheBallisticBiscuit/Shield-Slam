@@ -36,8 +36,8 @@ const char BACKGROUND_IMAGE[] = "pictures\\Background1.png";
 const char CLASS_NAME[] = "Shield Slam";
 const char GAME_TITLE[] = "Shield Slam";
 const bool FULLSCREEN = false;              // windowed or fullscreen
-const UINT GAME_WIDTH =  640;               // width of game in pixels
-const UINT GAME_HEIGHT = 480;               // height of game in pixels
+const UINT GAME_WIDTH =  1000;               // width of game in pixels
+const UINT GAME_HEIGHT = 600;               // height of game in pixels
 
 const float PLAYER_ANIMATION_DELAY = 0.2f;    // time between frames of ship animation
 
@@ -79,7 +79,7 @@ const int SHIELD_HEIGHT = 76;
 const float PLAYER_SPEED = 120.5f;
 
 //Bullet
-const float BULLET_SPEED = 240.0f;
+const float BULLET_SPEED = 400.0f;
 const float BULLET_SCALING = 0.6f;
 
 // game
@@ -99,13 +99,15 @@ const UCHAR PLAYER2_LEFT_KEY    = VK_LEFT;     // left arrow
 const UCHAR PLAYER2_RIGHT_KEY   = VK_RIGHT;    // right arrow
 const UCHAR PLAYER2_UP_KEY      = VK_UP;       // up arrow
 const UCHAR PLAYER2_DOWN_KEY    = VK_DOWN;     // down arrow
+const UCHAR PLAYER2_LOCK_KEY	= 0x11;
 
 const UCHAR PLAYER1_LEFT_KEY = 0x41;
 const UCHAR PLAYER1_RIGHT_KEY = 0x44;
 const UCHAR PLAYER1_UP_KEY = 0x57;
 const UCHAR PLAYER1_DOWN_KEY = 0x53;
+const UCHAR PLAYER1_LOCK_KEY = 0x10;
 
-const float SHIELD_SCALE = 0.3;
+const float SHIELD_SCALE = 0.23;
 
 const float OBSTACLE_SCALE = 1.0f;
 const float OBSTACLE_HEIGHT = 649/11;
