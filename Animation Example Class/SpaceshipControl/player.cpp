@@ -135,6 +135,12 @@ void Player::wasted() {
 	isDead = true;
 }
 
+void Player::respawn(float spawnX){
+	isDead = false;
+	setX(spawnX);
+	setY(GAME_HEIGHT/2);
+}
+
 void Player::onLostDevice(){
 	playerTexture.onLostDevice();
 	playerShield.onLostDevice();
@@ -148,4 +154,8 @@ void Player::onResetDevice(){
 void Player::draw(){
 	playerShield.draw();
 	Entity::draw();
+}
+
+bool Player::isPlayerDead(){
+	return isDead;
 }

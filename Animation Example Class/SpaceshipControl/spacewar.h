@@ -22,10 +22,11 @@
 class Spacewar : public Game
 {
 private:
-	Bullet bullet1;
-	Bullet bullet2;
-	Bullet bullet3;
-	Bullet bullet4;
+	//Bullet bullet1;
+	//Bullet bullet2;
+	//Bullet bullet3;
+	//Bullet bullet4;
+	Bullet bullets[16];
 	Player player1;
 	Player player2;
 	TextureManager backgroundTexture;
@@ -35,6 +36,10 @@ private:
 	LastDirection redLastDirection;
 	bool keyDownLastFrame;
 	bool keyDownThisFrame;
+	float gameClock;
+	bool hardMode;
+	bool insanityMode;
+	bool deathMode;
 
 
 public:
@@ -52,6 +57,8 @@ public:
     void render();      // "
     void releaseAll();
     void resetAll();
+	void reset();
+	void gameOver();
 };
 
 #endif

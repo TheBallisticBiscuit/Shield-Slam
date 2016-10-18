@@ -28,14 +28,28 @@ Spacewar::~Spacewar()
 void Spacewar::initialize(HWND hwnd)
 {
 	Game::initialize(hwnd); // throws GameError
-	bullet1.initialize(graphics, 0, 0, 1, 1, this);
-	bullet2.initialize(graphics, GAME_WIDTH - 75, GAME_HEIGHT - 75, -1, -1, this);
-	bullet3.initialize(graphics, GAME_WIDTH - 75, 0, -1, 1, this);
-	bullet4.initialize(graphics, 0, GAME_HEIGHT - 75, 1, -1, this);
-	player1.initialize(graphics, "pictures\\redsoldiersheetupdate.png", 100, GAME_HEIGHT/2, 
+	for(int i = 0; i < NUM_BULLETS; i++){
+		if(i % 4 == 0){
+			bullets[i].initialize(graphics,BULLET_SPAWN_1_X, BULLET_SPAWN_1_Y, 1, 1, this);
+		}
+		else if(i % 4 == 3){
+			bullets[i].initialize(graphics, BULLET_SPAWN_2_X, BULLET_SPAWN_2_Y, -1, -1, this);
+		}
+		else if(i % 4 == 2){
+			bullets[i].initialize(graphics, BULLET_SPAWN_3_X, BULLET_SPAWN_3_Y, -1, 1, this);
+		}
+		else if (i % 4 == 1){
+			bullets[i].initialize(graphics, BULLET_SPAWN_4_X, BULLET_SPAWN_4_Y, 1, -1, this);
+		}
+		if(i >= 4){
+			bullets[i].setActive(false);
+			bullets[i].setVisible(false);
+		}
+	}
+	player1.initialize(graphics, "pictures\\redsoldiersheetupdate.png", PLAYER1_SPAWN_X, GAME_HEIGHT/2, 
 		PLAYER1_RIGHT_KEY, PLAYER1_LEFT_KEY, PLAYER1_DOWN_KEY, PLAYER1_UP_KEY, PLAYER1_LOCK_KEY,
 		this);
-	player2.initialize(graphics, "pictures\\greensoldiersheetupdate.png", GAME_WIDTH-100, GAME_HEIGHT/2, 
+	player2.initialize(graphics, "pictures\\greensoldiersheetupdate.png", PLAYER2_SPAWN_X, GAME_HEIGHT/2, 
 		PLAYER2_RIGHT_KEY, PLAYER2_LEFT_KEY, PLAYER2_DOWN_KEY, PLAYER2_UP_KEY, PLAYER2_LOCK_KEY,
 		this);
 
@@ -47,9 +61,12 @@ void Spacewar::initialize(HWND hwnd)
 	if (!obstacle.initialize(graphics, ((GAME_WIDTH/2) - (OBSTACLE_WIDTH/2)), GAME_HEIGHT/2, this))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing obstacle texture"));
 	audio->playCue(BACKGROUND_MUSIC);
-	//player1.setActive(false);
-	//player2.setActive(false);
-	//obstacle.setActive(false); 
+	gameClock = 0;
+	hardMode = false;
+	insanityMode = false;
+	deathMode = false;
+	player1.setActive(false);
+	player2.setActive(false);
 	return;
 }
 
@@ -62,15 +79,135 @@ void Spacewar::update()
 	if(input->isKeyDown(VK_ESCAPE)){
 		exit(0);
 	}
+	if(input->isKeyDown(VK_SPACE)){
+		reset();
+	}
+#pragma region Hard mode
+	if(gameClock >= 10 && !hardMode){
+		VECTOR2 bullet1Start(1, 1);
+		VECTOR2 bullet2Start(-1, -1);
+		VECTOR2 bullet3Start(-1, 1);
+		VECTOR2 bullet4Start(1, -1);
+		for(int i = 4; i < 8; i++){		
+			if(i % 4 == 0){
+				bullets[i].setX(BULLET_SPAWN_1_X);
+				bullets[i].setY(BULLET_SPAWN_1_Y);
+				bullets[i].setVelocity(bullet1Start);
+				bullets[i].activate();
+				bullets[i].setVisible(true);
+			}
+			else if(i % 4 == 1){
+				bullets[i].setX(BULLET_SPAWN_2_X);
+				bullets[i].setY(BULLET_SPAWN_2_Y);
+				bullets[i].setVelocity(bullet2Start);
+				bullets[i].activate();
+				bullets[i].setVisible(true);
+			}
+			else if(i % 4 == 2){
+				bullets[i].setX(BULLET_SPAWN_3_X);
+				bullets[i].setY(BULLET_SPAWN_3_Y);
+				bullets[i].setVelocity(bullet3Start);
+				bullets[i].activate();
+				bullets[i].setVisible(true);
+			}
+			else if(i % 4 == 3){
+				bullets[i].setX(BULLET_SPAWN_4_X);
+				bullets[i].setY(BULLET_SPAWN_4_Y);
+				bullets[i].setVelocity(bullet4Start);
+				bullets[i].activate();
+				bullets[i].setVisible(true);
+			}
+		}
+		hardMode++;
+	}
+#pragma endregion
 
+#pragma region Insanity mode
+		if(gameClock >= 20 && !insanityMode){
+		VECTOR2 bullet1Start(1, 1);
+		VECTOR2 bullet2Start(-1, -1);
+		VECTOR2 bullet3Start(-1, 1);
+		VECTOR2 bullet4Start(1, -1);
+		for(int i = 8; i < 12; i++){		
+			if(i % 4 == 0){
+				bullets[i].setX(BULLET_SPAWN_1_X);
+				bullets[i].setY(BULLET_SPAWN_1_Y);
+				bullets[i].setVelocity(bullet1Start);
+				bullets[i].activate();
+				bullets[i].setVisible(true);
+			}
+			else if(i % 4 == 1){
+				bullets[i].setX(BULLET_SPAWN_2_X);
+				bullets[i].setY(BULLET_SPAWN_2_Y);
+				bullets[i].setVelocity(bullet2Start);
+				bullets[i].activate();
+				bullets[i].setVisible(true);
+			}
+			else if(i % 4 == 2){
+				bullets[i].setX(BULLET_SPAWN_3_X);
+				bullets[i].setY(BULLET_SPAWN_3_Y);
+				bullets[i].setVelocity(bullet3Start);
+				bullets[i].activate();
+				bullets[i].setVisible(true);
+			}
+			else if(i % 4 == 3){
+				bullets[i].setX(BULLET_SPAWN_4_X);
+				bullets[i].setY(BULLET_SPAWN_4_Y);
+				bullets[i].setVelocity(bullet4Start);
+				bullets[i].activate();
+				bullets[i].setVisible(true);
+			}
+		}
+		insanityMode++;
+	}
+#pragma endregion
 
+#pragma region Death mode
+		if(gameClock >= 30 && !deathMode){
+		VECTOR2 bullet1Start(1, 1);
+		VECTOR2 bullet2Start(-1, -1);
+		VECTOR2 bullet3Start(-1, 1);
+		VECTOR2 bullet4Start(1, -1);
+		for(int i = 12; i < 16; i++){		
+			if(i % 4 == 0){
+				bullets[i].setX(BULLET_SPAWN_1_X);
+				bullets[i].setY(BULLET_SPAWN_1_Y);
+				bullets[i].setVelocity(bullet1Start);
+				bullets[i].activate();
+				bullets[i].setVisible(true);
+			}
+			else if(i % 4 == 1){
+				bullets[i].setX(BULLET_SPAWN_2_X);
+				bullets[i].setY(BULLET_SPAWN_2_Y);
+				bullets[i].setVelocity(bullet2Start);
+				bullets[i].activate();
+				bullets[i].setVisible(true);
+			}
+			else if(i % 4 == 2){
+				bullets[i].setX(BULLET_SPAWN_3_X);
+				bullets[i].setY(BULLET_SPAWN_3_Y);
+				bullets[i].setVelocity(bullet3Start);
+				bullets[i].activate();
+				bullets[i].setVisible(true);
+			}
+			else if(i % 4 == 3){
+				bullets[i].setX(BULLET_SPAWN_4_X);
+				bullets[i].setY(BULLET_SPAWN_4_Y);
+				bullets[i].setVelocity(bullet4Start);
+				bullets[i].activate();
+				bullets[i].setVisible(true);
+			}
+		}
+		deathMode++;
+	}
+#pragma endregion
 	player1.update(frameTime);
 	player2.update(frameTime);
-	bullet1.update(frameTime);
-	bullet2.update(frameTime);
-	bullet3.update(frameTime);
-	bullet4.update(frameTime);
+	for(int i = 0; i < NUM_BULLETS; i++){
+		bullets[i].update(frameTime);
+	}
 	obstacle.update(frameTime);
+	gameClock += frameTime;
 }
 
 //=============================================================================
@@ -85,129 +222,46 @@ void Spacewar::ai()
 void Spacewar::collisions()
 {
 	VECTOR2 collisionVector;
-
 #pragma region Player1Collisions
-	if (bullet1.collidesWith(player1, collisionVector))	{
-		if (player1.itHitShield(collisionVector))
-			bullet1.bounce(collisionVector, player1);
-		else{
-			player1.wasted();
-			bullet1.gameOver();
-			bullet2.gameOver();
-			bullet3.gameOver();
-			bullet4.gameOver();			
-		}
-	}	
-	if (bullet2.collidesWith(player1, collisionVector))	{
-		if (player1.itHitShield(collisionVector))
-			bullet2.bounce(collisionVector, player1);
-		else{
-			player1.wasted();
-			bullet1.gameOver();
-			bullet2.gameOver();
-			bullet3.gameOver();
-			bullet4.gameOver();	
-		}
-
-	}
-	if (bullet3.collidesWith(player1, collisionVector))	{
-		if (player1.itHitShield(collisionVector))
-			bullet3.bounce(collisionVector, player1);
-		else{
-			player1.wasted();
-			bullet1.gameOver();
-			bullet2.gameOver();
-			bullet3.gameOver();
-			bullet4.gameOver();	
-		}
-	}
-	if (bullet4.collidesWith(player1, collisionVector))	{
-		if(player1.itHitShield(collisionVector)){
-			bullet4.bounce(collisionVector, player1);
-		}
-		else{
-			player1.wasted();
-			bullet1.gameOver();
-			bullet2.gameOver();
-			bullet3.gameOver();
-			bullet4.gameOver();
+	for(int i = 0; i < NUM_BULLETS; i++){
+		if(bullets[i].collidesWith(player1, collisionVector)){
+			if (player1.itHitShield(collisionVector)){
+				bullets[i].bounce(collisionVector, player1);
+				if(!player1.isPlayerDead()){
+					audio->playCue(LASER_SOUND);
+				}
+			}
+			else{
+				player1.wasted();
+				gameOver();
+			}
 		}
 	}
 #pragma endregion
 
 #pragma region Player2 Collisions
-	if (bullet1.collidesWith(player2, collisionVector))	{
-		if (player2.itHitShield(collisionVector))
-			bullet1.bounce(collisionVector, player2);
-		else{
-			player2.wasted();
-			bullet1.gameOver();
-			bullet2.gameOver();
-			bullet3.gameOver();
-			bullet4.gameOver();			
-		}
-	}	
-	if (bullet2.collidesWith(player2, collisionVector))	{
-		if (player2.itHitShield(collisionVector))
-			bullet2.bounce(collisionVector, player2);
-		else{
-			player2.wasted();
-			bullet1.gameOver();
-			bullet2.gameOver();
-			bullet3.gameOver();
-			bullet4.gameOver();	
-		}
-
-
-	}
-	if (bullet3.collidesWith(player2, collisionVector))	{
-		if (player2.itHitShield(collisionVector))
-			bullet3.bounce(collisionVector, player2);
-		else{
-			player2.wasted();
-			bullet1.gameOver();
-			bullet2.gameOver();
-			bullet3.gameOver();
-			bullet4.gameOver();	
+	for(int i = 0; i < NUM_BULLETS; i++){
+		if(bullets[i].collidesWith(player2, collisionVector)){
+			if (player2.itHitShield(collisionVector)){
+				bullets[i].bounce(collisionVector, player2);
+				if(!player2.isPlayerDead()){
+					audio->playCue(LASER_SOUND);
+				}
+			}
+			else{
+				player2.wasted();
+				gameOver();
+			}
 		}
 	}
-	if (bullet4.collidesWith(player2, collisionVector))	{
-		if(player2.itHitShield(collisionVector)){
-			bullet4.bounce(collisionVector, player2);
-		}
-		else{
-		player2.wasted();
-		bullet1.gameOver();
-		bullet2.gameOver();
-		bullet3.gameOver();
-		bullet4.gameOver();
-		}
-	}
-
 #pragma endregion
 
 #pragma region Obstacle Collision
-	if(bullet1.collidesWith(obstacle, collisionVector)){
-		bullet1.bounce(collisionVector, obstacle);
-		audio->playCue(BOUNCE_SOUND);
-	}
-	if(bullet2.collidesWith(obstacle, collisionVector)){
-		bullet2.bounce(collisionVector, obstacle);
-		audio->playCue(BOUNCE_SOUND);
-	}
-	if(bullet3.collidesWith(obstacle, collisionVector)){
-		bullet3.bounce(collisionVector, obstacle);
-		audio->playCue(BOUNCE_SOUND);
-	}
-	if(bullet4.collidesWith(obstacle, collisionVector)){
-		bullet4.bounce(collisionVector, obstacle);
-		audio->playCue(BOUNCE_SOUND);
-	}
-	if(player1.collidesWith(obstacle, collisionVector)){
-		player1.bounce(collisionVector, obstacle);
-	}
-	if(player2.collidesWith(obstacle, collisionVector)){
-		player2.bounce(collisionVector, obstacle);
+	for(int i = 0; i < NUM_BULLETS; i++){
+		if(bullets[i].collidesWith(obstacle, collisionVector)){
+			bullets[i].bounce(collisionVector, obstacle);
+			audio->playCue(LASER_SOUND);
+		}
 	}
 #pragma endregion
 }
@@ -222,10 +276,9 @@ void Spacewar::render()
 	obstacle.draw();
 	player1.draw();                            // add the spacejpo to the scene
 	player2.draw();
-	bullet1.draw();
-	bullet2.draw();
-	bullet3.draw();
-	bullet4.draw();
+	for(int i = 0; i < NUM_BULLETS; i++){
+		bullets[i].draw();
+	}
 	graphics->spriteEnd();                  // end drawing sprites
 }
 
@@ -243,10 +296,9 @@ void Spacewar::releaseAll()
 	backgroundTexture.onLostDevice();
 	obstacle.onLostDevice();
 
-	bullet1.onLostDevice();
-	bullet2.onLostDevice();
-	bullet3.onLostDevice();
-	bullet4.onLostDevice();
+	for(int i = 0; i < NUM_BULLETS; i++){
+		bullets[i].onLostDevice();
+	}
 	return;
 }
 
@@ -263,10 +315,56 @@ void Spacewar::resetAll()
 	backgroundTexture.onResetDevice();
 	obstacle.onResetDevice();
 
-	bullet1.onResetDevice();
-	bullet2.onResetDevice();
-	bullet3.onResetDevice();
-	bullet4.onResetDevice();
+	for(int i = 0; i < NUM_BULLETS; i++){
+		bullets[i].onResetDevice();
+	}
 	Game::resetAll();
 	return;
+}
+
+void Spacewar::reset(){
+	VECTOR2 bullet1Start(1, 1);
+	VECTOR2 bullet2Start(-1, -1);
+	VECTOR2 bullet3Start(-1, 1);
+	VECTOR2 bullet4Start(1, -1);
+	for(int i = 0; i < NUM_BULLETS; i++){
+		if(i % 4 == 0){
+			bullets[i].setX(BULLET_SPAWN_1_X);
+			bullets[i].setY(BULLET_SPAWN_1_Y);
+			bullets[i].setVelocity(bullet1Start);
+		}
+		else if(i % 4 == 1){
+			bullets[i].setX(BULLET_SPAWN_2_X);
+			bullets[i].setY(BULLET_SPAWN_2_Y);
+			bullets[i].setVelocity(bullet2Start);
+		}
+		else if(i % 4 == 2){
+			bullets[i].setX(BULLET_SPAWN_3_X);
+			bullets[i].setY(BULLET_SPAWN_3_Y);
+			bullets[i].setVelocity(bullet3Start);
+		}
+		else if(i % 4 == 3){
+			bullets[i].setX(BULLET_SPAWN_3_X);
+			bullets[i].setY(BULLET_SPAWN_3_Y);
+			bullets[i].setVelocity(bullet3Start);
+		}
+		if(i >= 4){
+			bullets[i].setActive(false);
+			bullets[i].setVisible(false);
+		}
+	}
+	gameClock = 0;
+	hardMode = false;
+	insanityMode = false;
+	deathMode = false;
+
+	//Player resets
+	player1.respawn(PLAYER1_SPAWN_X);
+	player2.respawn(PLAYER2_SPAWN_X);
+}
+
+void Spacewar::gameOver(){
+	for(int i = 0; i < NUM_BULLETS; i++){
+		bullets[i].gameOver();
+	}
 }

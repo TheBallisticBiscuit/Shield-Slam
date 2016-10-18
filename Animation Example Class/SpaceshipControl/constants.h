@@ -116,4 +116,18 @@ const float OBSTACLE_SCALE = 1.0f;
 const float OBSTACLE_HEIGHT = 649/11;
 const float OBSTACLE_WIDTH = 236;
 const float OBSTACLE_ANIMATION_DELAY = 0.1f;
+
+//Spawn points:
+const float BULLET_SPAWN_1_X = 1;
+const float BULLET_SPAWN_1_Y = 1;
+const float BULLET_SPAWN_2_X = GAME_WIDTH - 75;
+const float BULLET_SPAWN_2_Y = GAME_HEIGHT - 75;
+const float BULLET_SPAWN_3_X = GAME_WIDTH-75;
+const float BULLET_SPAWN_3_Y = 1;
+const float BULLET_SPAWN_4_X = 1;
+const float BULLET_SPAWN_4_Y = GAME_HEIGHT-75;
+const int NUM_BULLETS = 16;
+//player spawns
+const float PLAYER1_SPAWN_X = 100;
+const float PLAYER2_SPAWN_X = GAME_WIDTH-100;
 #endif
