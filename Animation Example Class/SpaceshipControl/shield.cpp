@@ -6,6 +6,8 @@ bool Shield::initialize(Graphics* graphics, float startingX, float startingY, La
 	setX(startingX);
 	setY(startingY);
 
+	active = false;
+
 	collisionType = entityNS::ROTATED_BOX;
 	edge.left = -(SHIELD_WIDTH)/2;
 	edge.right = (SHIELD_WIDTH)/2;
@@ -24,13 +26,13 @@ bool Shield::initialize(Graphics* graphics, float startingX, float startingY, La
 
 void Shield::update(float frameTime, float playerX, float playerY){
 	if(shieldDirection == left){
-		setDegrees(90);
-		setX(playerX+15);
+		setDegrees(270);
+		setX(playerX-30);
 		setY(playerY+20);
 	}
 	else if(shieldDirection == right){
-		setDegrees(270);
-		setX(playerX-30);
+		setDegrees(90);
+		setX(playerX+15);
 		setY(playerY+20);
 	}
 	else if(shieldDirection == up){
@@ -48,4 +50,9 @@ void Shield::update(float frameTime, float playerX, float playerY){
 
 void Shield::setDirection(LastDirection newDirection){
 	shieldDirection = newDirection;
+}
+
+int Shield::getDirection() {
+	int direction = shieldDirection;
+	return direction;
 }

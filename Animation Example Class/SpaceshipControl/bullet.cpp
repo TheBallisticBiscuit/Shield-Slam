@@ -1,4 +1,5 @@
 #include "bullet.h"
+#include <cmath>
 
 Bullet::Bullet(void){};
 
@@ -52,18 +53,8 @@ void Bullet::update(float frameTime){
 #pragma endregion
 
 #pragma region BulletAngle
-	if (velocity.x > 0 && velocity.y < 0) {
-		setDegrees(45);
-	}
-	if (velocity.x > 0 && velocity.y > 0) {
-		setDegrees(135);
-	}
-	if (velocity.x < 0 && velocity.y > 0) {
-		setDegrees(225);
-	}
-	if (velocity.x < 0 && velocity.y < 0) {
-		setDegrees(315);
-	}
+	setRadians((atan2f(velocity.x, velocity.y)*-1) + PI);
+
 #pragma endregion
 
 	setX(testX);

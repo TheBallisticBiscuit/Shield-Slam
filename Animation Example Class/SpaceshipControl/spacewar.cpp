@@ -47,9 +47,9 @@ void Spacewar::initialize(HWND hwnd)
 	if (!obstacle.initialize(graphics, ((GAME_WIDTH/2) - (OBSTACLE_WIDTH/2)), GAME_HEIGHT/2, this))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing obstacle texture"));
 	audio->playCue(BACKGROUND_MUSIC);
-	player1.setActive(false);
+	//player1.setActive(false);
 	player2.setActive(false);
-	//obstacle.setActive(false);
+	//obstacle.setActive(false); 
 	return;
 }
 
@@ -88,26 +88,28 @@ void Spacewar::collisions()
 
 #pragma region Player1Collisions
 	if (bullet1.collidesWith(player1, collisionVector))	{
-		player1.wasted();
-		bullet1.gameOver();
-		bullet2.gameOver();
-		bullet3.gameOver();
-		bullet4.gameOver();
+		if (player1.itHitShield(collisionVector))
+			bullet1.bounce(collisionVector, player1);
+		else
+			player1.wasted();
+			bullet1.gameOver();
+			bullet2.gameOver();
+			bullet3.gameOver();
+			bullet4.gameOver();			
 	}	
 	if (bullet2.collidesWith(player1, collisionVector))	{
-		player1.wasted();
-		bullet1.gameOver();
-		bullet2.gameOver();
-		bullet3.gameOver();
-		bullet4.gameOver();
+		if (player1.itHitShield(collisionVector))
+			bullet2.bounce(collisionVector, player1);
+		else
+			player1.wasted();
+
 
 	}
 	if (bullet3.collidesWith(player1, collisionVector))	{
-		player1.wasted();
-		bullet1.gameOver();
-		bullet2.gameOver();
-		bullet3.gameOver();
-		bullet4.gameOver();
+		if (player1.itHitShield(collisionVector))
+			bullet3.bounce(collisionVector, player1);
+		else
+			player1.wasted();
 
 	}
 	if (bullet4.collidesWith(player1, collisionVector))	{

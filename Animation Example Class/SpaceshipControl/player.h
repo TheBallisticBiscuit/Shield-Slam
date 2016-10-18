@@ -15,6 +15,7 @@ public:
 		int PLAYER_RIGHT_KEY, int PLAYER_LEFT_KEY4, int PLAYER_DOWN_KEY, int PLAYER_UP_KEY,
 		Game* game);
 
+	bool itHitShield(VECTOR2 collisionVec);
 	void wasted(); //When player gets hit, stops his movement
 
 	void onLostDevice();

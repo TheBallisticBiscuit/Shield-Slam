@@ -8,8 +8,6 @@ bool Player::initialize(Graphics* graphics, const char* filepath, float starting
 	if (!playerTexture.initialize(graphics, filepath))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Player 1 texture"));
 
-	active = false;
-
 	setX(startingX);                   
 	setY(startingY);
 	setFrames(PLAYER_LOOKING_RIGHT_START, PLAYER_LOOKING_RIGHT_END);   // animation frames
@@ -24,8 +22,8 @@ bool Player::initialize(Graphics* graphics, const char* filepath, float starting
 	collisionType = entityNS::BOX;
 	edge.top = -PLAYER_HEIGHT/2;
 	edge.bottom = PLAYER_HEIGHT/2;
-	edge.left = -PLAYER_WIDTH/4+20;
-	edge.right = PLAYER_WIDTH/4-20;
+	edge.left = -PLAYER_WIDTH/2;
+	edge.right = PLAYER_WIDTH/2;
 	isDead = false;
 	if(!playerShield.initialize(graphics, startingX, startingY, Shield::left, game)){
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Player 1 shield"));
@@ -46,7 +44,7 @@ void Player::update(float frameTime){
 		}
 		lastDirection = right;
 		lastXDirection = right;
-		playerShield.setDirection(Shield::left);
+		playerShield.setDirection(Shield::right);
 	}
 	if(input->isKeyDown(PLAYER_LEFT_KEY) && isDead == false)             // if move left
 	{
@@ -57,7 +55,7 @@ void Player::update(float frameTime){
 		}
 		lastDirection = left;
 		lastXDirection = left;
-		playerShield.setDirection(Shield::right);
+		playerShield.setDirection(Shield::left);
 	}
 	if(input->isKeyDown(PLAYER_DOWN_KEY) && isDead == false){
 		velocity.y--;
@@ -91,6 +89,38 @@ void Player::update(float frameTime){
 	playerShield.update(frameTime, getX(), getY());
 	Entity::update(frameTime);
 }
+
+bool Player::itHitShield(VECTOR2 collisionVec) { //Returns true if the bullet hit the shield, false otherwise				
+	if (abs(collisionVec.x) > abs(collisionVec.y)) { //X-Axis hit
+		if (collisionVec.x < 0) { //Hit on right side
+			if (playerShield.getDirection() == 1)
+				return true;
+			else
+				return false;
+		}
+		else {					//Hit on left side
+			if (playerShield.getDirection() == 0)
+				return true;
+			else 
+				return false;
+		}
+	}
+	else { //Y-Axis hit
+		if (collisionVec.y > 0) { //Hit from above
+			if (playerShield.getDirection() == 2)
+				return true;
+			else
+				return false;
+		}
+		else {				//Hit from below
+			if (playerShield.getDirection() == 3)
+				return true;
+			else
+				return false;
+		}
+	}
+}
+
 
 void Player::wasted() {
 	isDead = true;

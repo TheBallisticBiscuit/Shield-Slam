@@ -15,6 +15,7 @@ public:
 		shieldTexture.onResetDevice();
 	}
 	void setDirection(LastDirection newDirection);
+	int getDirection();
 private:
 	TextureManager shieldTexture;
 	LastDirection shieldDirection;
