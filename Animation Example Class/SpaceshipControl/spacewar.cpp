@@ -119,7 +119,7 @@ void Spacewar::update()
 				reset();
 			}
 		}
-		else if (gameClock >= 3 && level != 2){
+		if (gameClock >= 3 && level != 2){
 			gamePaused = false;
 			nextLevel();
 
