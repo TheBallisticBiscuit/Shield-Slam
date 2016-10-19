@@ -81,13 +81,13 @@ void Spacewar::initialize(HWND hwnd)
 	lvl2Obstacles[3].setVisible(false);
 #pragma endregion
 
-	if (score.initialize(graphics, 40, 1, 0, "Times New Roman") == false) 
+	if (score.initialize(graphics, 40, 1, 0, "OCR A Extended") == false) 
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Score Text"));
-	if (!whoScored.initialize(graphics, 80, 1, 0, "Times New Roman"))
+	if (!whoScored.initialize(graphics, 80, 0, 0, "Bauhaus 93"))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing DeathText"));
-	if (!endGame.initialize(graphics, 70, 1, 0, "Times New Roman"))
+	if (!endGame.initialize(graphics, 70, 0, 0, "Bauhaus 93"))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing EndGame Text"));
-	if (!playAgain.initialize(graphics, 60, 0, 0, "Times New Roman"))
+	if (!playAgain.initialize(graphics, 50, 0, 0, "OCR A Extended"))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing PlayAgain Text"));
 
 	audio->playCue(BACKGROUND_MUSIC);
@@ -320,12 +320,16 @@ void Spacewar::collisions()
 	for(int i = 0; i < NUM_BULLETS; i++){
 		if(bullets[i].collidesWith(lvl1Obstacle, collisionVector)){
 			bullets[i].bounce(collisionVector, lvl1Obstacle);
-			audio->playCue(LASER_SOUND);
+			if(!player1.isPlayerDead() && !player1.isPlayerDead()){
+				audio->playCue(LASER_SOUND);
+			}
 		}
-			for(int j = 0; j < 4; j++){
-				if(bullets[i].collidesWith(lvl2Obstacles[j], collisionVector)){
-					bullets[i].bounce(collisionVector, lvl2Obstacles[j]);
+		for(int j = 0; j < 4; j++){
+			if(bullets[i].collidesWith(lvl2Obstacles[j], collisionVector)){
+				bullets[i].bounce(collisionVector, lvl2Obstacles[j]);
+				if(!player1.isPlayerDead() && !player1.isPlayerDead()){
 					audio->playCue(LASER_SOUND);
+				}
 			}
 		}
 	}
@@ -336,6 +340,12 @@ void Spacewar::collisions()
 		if(player2.collidesWith(lvl2Obstacles[j], collisionVector)){
 			player2.bounce(collisionVector, lvl2Obstacles[j]);
 		}
+	}
+	if(player1.collidesWith(lvl1Obstacle, collisionVector)){
+		player1.bounce(collisionVector, lvl1Obstacle);
+	}
+	if(player2.collidesWith(lvl1Obstacle, collisionVector)){
+		player2.bounce(collisionVector, lvl1Obstacle);
 	}
 #pragma endregion
 }
@@ -360,20 +370,21 @@ void Spacewar::render()
 	score.setFontColor(graphicsNS::RED);
 	score.print("Score: " + std::to_string(player1.getScore()), 40, 525);
 	score.setFontColor(graphicsNS::B_GREEN);
-	score.print("Score: " + std::to_string(player2.getScore()), 850, 525);
+	score.print("Score: " + std::to_string(player2.getScore()), 775, 525);
 
 
 	if (level == 2) {
 		if (player1.isPlayerDead() || player2.isPlayerDead()) {
-			endGame.setFontColor(graphicsNS::BLACK);
-			playAgain.setFontColor(graphicsNS::BLUE);
+			playAgain.setFontColor(graphicsNS::WHITE);
 			if (player1.getScore() > 1) {
-				endGame.print("Red Player WINS!", 250, 300);
-				playAgain.print("Press SPACE for a new game", 250, 450);
+				endGame.setFontColor(graphicsNS::RED);
+				endGame.print("Red Player WINS!", 250, 225);
+				playAgain.print("PRESS SPACE FOR A NEW GAME", 120, 375);
 			}
 			else if (player2.getScore() > 1) {
-				endGame.print("Green Player WINS!", 250, 300);
-				playAgain.print("Press SPACE for a new game", 250, 450);
+				endGame.setFontColor(graphicsNS::B_GREEN);
+				endGame.print("Green Player WINS!", 250, 225);
+				playAgain.print("PRESS SPACE FOR A NEW GAME", 120, 375);
 			}
 		}
 	}
@@ -467,6 +478,12 @@ void Spacewar::reset(){
 		if(i >= 4){
 			bullets[i].setActive(false);
 			bullets[i].setVisible(false);
+		}
+	}
+	if(level == 0){
+		for(int i = 0; i < 4; i++){
+			lvl2Obstacles[i].setActive(false);
+			lvl2Obstacles[i].setVisible(false);
 		}
 	}
 	gameClock = 0;

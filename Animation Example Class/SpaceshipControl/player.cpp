@@ -21,8 +21,8 @@ bool Player::initialize(Graphics* graphics, const char* filepath, float starting
 	lastXDirection = left;
 	lastDirection = left;
 	collisionType = entityNS::BOX;
-	edge.top = -PLAYER_HEIGHT/2;
-	edge.bottom = PLAYER_HEIGHT/2;
+	edge.top = -PLAYER_HEIGHT/2+10;
+	edge.bottom = PLAYER_HEIGHT/2-10;
 	edge.left = -PLAYER_WIDTH/2+20;
 	edge.right = PLAYER_WIDTH/2-20;
 	mass = 6000;
