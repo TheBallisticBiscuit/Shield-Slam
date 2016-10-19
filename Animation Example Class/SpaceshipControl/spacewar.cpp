@@ -81,13 +81,13 @@ void Spacewar::initialize(HWND hwnd)
 	lvl2Obstacles[3].setVisible(false);
 #pragma endregion
 
-	if (score.initialize(graphics, 40, 1, 0, "Times New Roman") == false) 
+	if (!score.initialize(graphics, 40, 1, 0, "OCR A Extended")) 
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Score Text"));
-	if (!whoScored.initialize(graphics, 80, 1, 0, "Times New Roman"))
+	if (!whoScored.initialize(graphics, 80, 1, 0, "Bauhaus 93"))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing DeathText"));
-	if (!endGame.initialize(graphics, 70, 1, 0, "Times New Roman"))
+	if (!endGame.initialize(graphics, 70, 1, 0, "Bauhaus 93"))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing EndGame Text"));
-	if (!playAgain.initialize(graphics, 60, 0, 0, "Times New Roman"))
+	if (!playAgain.initialize(graphics, 50, 0, 0, "OCR A Extended"))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing PlayAgain Text"));
 
 	audio->playCue(BACKGROUND_MUSIC);
@@ -360,31 +360,32 @@ void Spacewar::render()
 	score.setFontColor(graphicsNS::RED);
 	score.print("Score: " + std::to_string(player1.getScore()), 40, 525);
 	score.setFontColor(graphicsNS::B_GREEN);
-	score.print("Score: " + std::to_string(player2.getScore()), 850, 525);
+	score.print("Score: " + std::to_string(player2.getScore()), 775, 525);
 
 
 	if (level == 2) {
 		if (player1.isPlayerDead() || player2.isPlayerDead()) {
-			endGame.setFontColor(graphicsNS::BLACK);
-			playAgain.setFontColor(graphicsNS::BLUE);
+			playAgain.setFontColor(graphicsNS::WHITE);
 			if (player1.getScore() > 1) {
-				endGame.print("Red Player WINS!", 250, 300);
-				playAgain.print("Press SPACE for a new game", 250, 450);
+				endGame.setFontColor(graphicsNS::RED);
+				endGame.print("RED PLAYER WINS!", 220, 225);
+				playAgain.print("PRESS SPACE FOR A NEW GAME", 120, 375);
 			}
 			else if (player2.getScore() > 1) {
-				endGame.print("Green Player WINS!", 250, 300);
-				playAgain.print("Press SPACE for a new game", 250, 450);
+				endGame.setFontColor(graphicsNS::B_GREEN);
+				endGame.print("GREEN PLAYER WINS!", 220, 225);
+				playAgain.print("PRESS SPACE FOR A NEW GAME", 120, 375);
 			}
 		}
 	}
 	else {
 		if (player1.isPlayerDead()){
 			whoScored.setFontColor(graphicsNS::B_GREEN);
-			whoScored.print("Green Player Score!", 240, 80);
+			whoScored.print("Green Player Score!", 200, 80);
 		}
 		if (player2.isPlayerDead()) {
 			whoScored.setFontColor(graphicsNS::RED);
-			whoScored.print("Red Player Score!", 250, 80);
+			whoScored.print("Red Player Score!", 230, 80);
 		}
 	}
 #pragma endregion
