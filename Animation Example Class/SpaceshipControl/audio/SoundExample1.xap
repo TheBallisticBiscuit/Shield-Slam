@@ -16,8 +16,8 @@ Global Settings
     Header File = C:\Programming 2D Games\Object Version\Chapter 7 Sound\SoundExample1\audio\SoundExample1.h;
     Exclude Category Names = 0;
     Exclude Variable Names = 0;
-    Last Modified Low = 1460891743;
-    Last Modified High = 30550446;
+    Last Modified Low = 787845363;
+    Last Modified High = 30550447;
 
     Category
     {
@@ -227,7 +227,7 @@ Wave Bank
     Compression Preset Name = <none>;
     Xbox Bank Last Modified Low = 0;
     Xbox Bank Last Modified High = 0;
-    PC Bank Last Modified Low = 364608637;
+    PC Bank Last Modified Low = 4163470789;
     PC Bank Last Modified High = 30550446;
     Header Last Modified Low = 0;
     Header Last Modified High = 0;
@@ -252,8 +252,8 @@ Wave Bank
             Loop Region Offset = 0;
             Loop Region Length = 0;
             File Type = 1;
-            Last Modified Low = 494287824;
-            Last Modified High = 30548429;
+            Last Modified Low = 1286564352;
+            Last Modified High = 30138563;
         }
     }
 
@@ -275,8 +275,8 @@ Wave Bank
             Loop Region Offset = 0;
             Loop Region Length = 0;
             File Type = 1;
-            Last Modified Low = 494307838;
-            Last Modified High = 30548429;
+            Last Modified Low = 3256498944;
+            Last Modified High = 30138561;
         }
     }
 
@@ -298,8 +298,8 @@ Wave Bank
             Loop Region Offset = 0;
             Loop Region Length = 0;
             File Type = 1;
-            Last Modified Low = 494327868;
-            Last Modified High = 30548429;
+            Last Modified Low = 4032443648;
+            Last Modified High = 30138437;
         }
     }
 
@@ -321,8 +321,8 @@ Wave Bank
             Loop Region Offset = 0;
             Loop Region Length = 0;
             File Type = 1;
-            Last Modified Low = 494347870;
-            Last Modified High = 30548429;
+            Last Modified Low = 317476352;
+            Last Modified High = 30138438;
         }
     }
 
@@ -344,8 +344,8 @@ Wave Bank
             Loop Region Offset = 0;
             Loop Region Length = 0;
             File Type = 1;
-            Last Modified Low = 494377882;
-            Last Modified High = 30548429;
+            Last Modified Low = 657476352;
+            Last Modified High = 30138438;
         }
     }
 
@@ -367,8 +367,8 @@ Wave Bank
             Loop Region Offset = 0;
             Loop Region Length = 0;
             File Type = 1;
-            Last Modified Low = 3935125509;
-            Last Modified High = 30498668;
+            Last Modified Low = 2350180809;
+            Last Modified High = 30549260;
         }
     }
 
@@ -390,8 +390,8 @@ Wave Bank
             Loop Region Offset = 0;
             Loop Region Length = 0;
             File Type = 1;
-            Last Modified Low = 2534500938;
-            Last Modified High = 30550261;
+            Last Modified Low = 3883533401;
+            Last Modified High = 30550271;
         }
     }
 
@@ -413,8 +413,8 @@ Wave Bank
             Loop Region Offset = 0;
             Loop Region Length = 0;
             File Type = 1;
-            Last Modified Low = 3336741618;
-            Last Modified High = 30550261;
+            Last Modified Low = 3883573423;
+            Last Modified High = 30550271;
         }
     }
 
@@ -436,8 +436,8 @@ Wave Bank
             Loop Region Offset = 0;
             Loop Region Length = 0;
             File Type = 1;
-            Last Modified Low = 497361035;
-            Last Modified High = 30550262;
+            Last Modified Low = 3883613252;
+            Last Modified High = 30550271;
         }
     }
 
@@ -459,8 +459,8 @@ Wave Bank
             Loop Region Offset = 0;
             Loop Region Length = 0;
             File Type = 1;
-            Last Modified Low = 3434501935;
-            Last Modified High = 30550444;
+            Last Modified Low = 2902496358;
+            Last Modified High = 30550446;
         }
     }
 
@@ -482,8 +482,8 @@ Wave Bank
             Loop Region Offset = 0;
             Loop Region Length = 0;
             File Type = 1;
-            Last Modified Low = 3976983153;
-            Last Modified High = 30550445;
+            Last Modified Low = 2902536363;
+            Last Modified High = 30550446;
         }
     }
 }
@@ -972,7 +972,7 @@ Sound Bank
     Sound
     {
         Name = WallHit2;
-        Volume = -2500;
+        Volume = -5000;
         Pitch = 0;
         Priority = 0;
 

@@ -480,6 +480,7 @@ void Spacewar::reset(){
 			bullets[i].setActive(false);
 			bullets[i].setVisible(false);
 		}
+
 	}
 	if(level == 0){
 		lvl1Obstacle.activate();
