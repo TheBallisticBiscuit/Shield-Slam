@@ -66,7 +66,6 @@ public:
     void releaseAll();
     void resetAll();
 	void reset();
-	void gameOver();
 	void nextLevel();
 };
 

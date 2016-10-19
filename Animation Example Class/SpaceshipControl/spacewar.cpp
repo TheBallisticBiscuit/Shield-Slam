@@ -103,22 +103,28 @@ void Spacewar::initialize(HWND hwnd)
 //=============================================================================
 void Spacewar::update()
 {
+	gameClock += frameTime;
 	if(input->isKeyDown(VK_ESCAPE)){
 		exit(0);
 	}
 	if(gamePaused){
 		if(input->isKeyDown(VK_SPACE)){
+			if(level == 2){
+				gamePaused = false;
+				player1.resetScore();
+				player2.resetScore();
+				level = 0;
+				reset();
+			}
+		}
+		else if (gameClock >= 3 && level != 2){
 			gamePaused = false;
+			nextLevel();
+
 		}
 		else{
 			return;
 		}
-	}
-	if(input->isKeyDown(VK_SPACE)){
-		level = 0;
-		reset();
-		player1.resetScore();
-		player2.resetScore();
 	}
 #pragma region Hard mode
 	if(gameClock >= 7 && !hardMode){
@@ -250,14 +256,13 @@ void Spacewar::update()
 	for(int i = 0; i < 4; i++){
 		lvl2Obstacles[i].update(frameTime);
 	}
-	gameClock += frameTime;
 	if(player1.isPlayerDead() || player2.isPlayerDead()){
 		if(level == 2){
 			gamePaused = true;
 		}
 		else{
-			Sleep(3000);
-			nextLevel();
+			gamePaused = true;
+			gameClock = 0;
 		}
 	}
 }
@@ -288,7 +293,6 @@ void Spacewar::collisions()
 					player2.addScore();
 				}
 				player1.wasted();
-				gameOver();
 			}
 		}
 	}
@@ -308,7 +312,6 @@ void Spacewar::collisions()
 					player1.addScore();
 				}
 				player2.wasted();
-				gameOver();
 			}
 		}
 	}
@@ -318,14 +321,14 @@ void Spacewar::collisions()
 	for(int i = 0; i < NUM_BULLETS; i++){
 		if(bullets[i].collidesWith(lvl1Obstacle, collisionVector)){
 			bullets[i].bounce(collisionVector, lvl1Obstacle);
-			if(!player1.isPlayerDead() && !player1.isPlayerDead()){
+			if(!player1.isPlayerDead() && !player2.isPlayerDead()){
 				audio->playCue(LASER_SOUND);
 			}
 		}
 		for(int j = 0; j < 4; j++){
 			if(bullets[i].collidesWith(lvl2Obstacles[j], collisionVector)){
 				bullets[i].bounce(collisionVector, lvl2Obstacles[j]);
-				if(!player1.isPlayerDead() && !player1.isPlayerDead()){
+				if(!player1.isPlayerDead() && !player2.isPlayerDead()){
 					audio->playCue(LASER_SOUND);
 				}
 			}
@@ -502,12 +505,6 @@ void Spacewar::reset(){
 	//Player resets
 	player1.respawn(PLAYER1_SPAWN_X);
 	player2.respawn(PLAYER2_SPAWN_X);
-}
-
-void Spacewar::gameOver(){
-	for(int i = 0; i < NUM_BULLETS; i++){
-		bullets[i].gameOver();
-	}
 }
 
 void Spacewar::nextLevel(){
