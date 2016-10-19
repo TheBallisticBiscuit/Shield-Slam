@@ -37,6 +37,7 @@ private:
 	TextDX endGame;
 	TextDX playAgain;
 	TextDX getReady;
+	TextDX begin;
 
 	enum LastDirection {left, right, up, down} greenLastDirection;
 	LastDirection redLastDirection;

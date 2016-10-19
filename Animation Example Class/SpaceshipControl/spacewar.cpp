@@ -87,14 +87,16 @@ void Spacewar::initialize(HWND hwnd)
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing PlayAgain Text"));
 	if (!getReady.initialize(graphics, 45, 0, 0, "OCR A Extended"))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing GetReady Text"));
+	if(!begin.initialize(graphics, 50, 0, 0, "OCR A Extended"))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Begin Text"));
 
 	audio->playCue(BACKGROUND_MUSIC);
 	gameClock = 0;
 	hardMode = false;
 	insanityMode = false;
 	deathMode = false;
-	level = 0;
-	gamePaused = false;
+	level = 2;
+	gamePaused = true;
 	return;
 }
 
@@ -392,6 +394,11 @@ void Spacewar::render()
 				playAgain.print("PRESS SPACE FOR A NEW GAME", 120, 375);
 			}
 		}
+		else if (player1.getScore() == 0 && player2.getScore() == 0){ //both players are alive and beginning of game
+			begin.setFontColor(graphicsNS::WHITE);
+			begin.print("PRESS SPACE TO START", 200, 375);
+		
+		}
 	}
 	else {
 		if (player1.isPlayerDead()){
@@ -400,7 +407,7 @@ void Spacewar::render()
 			getReady.setFontColor(graphicsNS::WHITE);
 			getReady.print("GET READY...", 345, 390);
 		}
-		if (player2.isPlayerDead()) {
+		else if (player2.isPlayerDead()) {
 			whoScored.setFontColor(graphicsNS::RED);
 			whoScored.print("Red Player Score!", 230, 80);
 			getReady.setFontColor(graphicsNS::WHITE);
