@@ -44,6 +44,7 @@ private:
 	bool insanityMode;
 	bool deathMode;
 	int level;
+	bool gamePaused;
 
 
 public:
