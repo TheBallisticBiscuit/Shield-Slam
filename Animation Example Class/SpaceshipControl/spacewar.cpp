@@ -90,6 +90,7 @@ void Spacewar::initialize(HWND hwnd)
 	insanityMode = false;
 	deathMode = false;
 	level = 0;
+	gamePaused = false;
 	return;
 }
 
@@ -98,15 +99,25 @@ void Spacewar::initialize(HWND hwnd)
 //=============================================================================
 void Spacewar::update()
 {
-
 	if(input->isKeyDown(VK_ESCAPE)){
 		exit(0);
 	}
+	if(gamePaused){
+		if(input->isKeyDown(VK_SPACE)){
+			gamePaused = false;
+		}
+		else{
+			return;
+		}
+	}
 	if(input->isKeyDown(VK_SPACE)){
 		reset();
+		player1.resetScore();
+		player2.resetScore();
+		level = 0;
 	}
 #pragma region Hard mode
-	if(gameClock >= 10 && !hardMode){
+	if(gameClock >= 7 && !hardMode){
 		VECTOR2 bullet1Start(1, 1);
 		VECTOR2 bullet2Start(-1, -1);
 		VECTOR2 bullet3Start(-1, 1);
@@ -146,7 +157,7 @@ void Spacewar::update()
 #pragma endregion
 
 #pragma region Insanity mode
-	if(gameClock >= 20 && !insanityMode){
+	if(gameClock >= 15 && !insanityMode){
 		VECTOR2 bullet1Start(1, 1);
 		VECTOR2 bullet2Start(-1, -1);
 		VECTOR2 bullet3Start(-1, 1);
@@ -186,7 +197,7 @@ void Spacewar::update()
 #pragma endregion
 
 #pragma region Death mode
-	if(gameClock >= 30 && !deathMode){
+	if(gameClock >= 20 && !deathMode){
 		VECTOR2 bullet1Start(1, 1);
 		VECTOR2 bullet2Start(-1, -1);
 		VECTOR2 bullet3Start(-1, 1);
@@ -237,8 +248,13 @@ void Spacewar::update()
 	}
 	gameClock += frameTime;
 	if(player1.isPlayerDead() || player2.isPlayerDead()){
-		Sleep(3000);
-		nextLevel();
+		if(level == 2){
+			gamePaused = true;
+		}
+		else{
+			Sleep(3000);
+			nextLevel();
+		}
 	}
 }
 
@@ -423,7 +439,6 @@ void Spacewar::reset(){
 	hardMode = false;
 	insanityMode = false;
 	deathMode = false;
-
 	//Player resets
 	player1.respawn(PLAYER1_SPAWN_X);
 	player2.respawn(PLAYER2_SPAWN_X);

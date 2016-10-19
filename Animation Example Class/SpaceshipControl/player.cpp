@@ -174,3 +174,6 @@ void Player::addScore() {
 	score++;
 }
 
+void Player::resetScore(){
+	score = 0;
+}

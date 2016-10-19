@@ -26,6 +26,7 @@ public:
 	int getShieldDirection();
 	int getScore();
 	void addScore();
+	void resetScore();
 private:
 	enum LastDirection {left, right, up, down} lastDirection;
 	LastDirection lastXDirection; //~~~ DELETE? Not being used.
