@@ -36,6 +36,7 @@ private:
 	TextDX whoScored;
 	TextDX endGame;
 	TextDX playAgain;
+	TextDX getReady;
 
 	enum LastDirection {left, right, up, down} greenLastDirection;
 	LastDirection redLastDirection;

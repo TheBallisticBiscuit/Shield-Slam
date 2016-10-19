@@ -82,10 +82,11 @@ void Spacewar::initialize(HWND hwnd)
 	if (!whoScored.initialize(graphics, 80, 1, 0, "Bauhaus 93"))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing DeathText"));
 	if (!endGame.initialize(graphics, 70, 1, 0, "Bauhaus 93"))
-
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing EndGame Text"));
 	if (!playAgain.initialize(graphics, 50, 0, 0, "OCR A Extended"))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing PlayAgain Text"));
+	if (!getReady.initialize(graphics, 45, 0, 0, "OCR A Extended"))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing GetReady Text"));
 
 	audio->playCue(BACKGROUND_MUSIC);
 	gameClock = 0;
@@ -393,10 +394,14 @@ void Spacewar::render()
 		if (player1.isPlayerDead()){
 			whoScored.setFontColor(graphicsNS::B_GREEN);
 			whoScored.print("Green Player Score!", 200, 80);
+			getReady.setFontColor(graphicsNS::WHITE);
+			getReady.print("GET READY...", 345, 390);
 		}
 		if (player2.isPlayerDead()) {
 			whoScored.setFontColor(graphicsNS::RED);
 			whoScored.print("Red Player Score!", 230, 80);
+			getReady.setFontColor(graphicsNS::WHITE);
+			getReady.print("GET READY...", 345, 390);
 		}
 	}
 #pragma endregion
