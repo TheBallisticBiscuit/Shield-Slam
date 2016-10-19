@@ -1,8 +1,3 @@
-// Programming 2D Games
-// Copyright (c) 2011 by: 
-// Charles Kelly
-// Move spacejpo with arrow keys.
-// Chapter 5 spacewar.cpp v1.0
 // This class is the core of the game
 
 #include "spaceWar.h"
@@ -81,11 +76,13 @@ void Spacewar::initialize(HWND hwnd)
 	lvl2Obstacles[3].setVisible(false);
 #pragma endregion
 
-	if (score.initialize(graphics, 40, 1, 0, "OCR A Extended") == false) 
+
+	if (!score.initialize(graphics, 40, 1, 0, "OCR A Extended")) 
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Score Text"));
-	if (!whoScored.initialize(graphics, 80, 0, 0, "Bauhaus 93"))
+	if (!whoScored.initialize(graphics, 80, 1, 0, "Bauhaus 93"))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing DeathText"));
-	if (!endGame.initialize(graphics, 70, 0, 0, "Bauhaus 93"))
+	if (!endGame.initialize(graphics, 70, 1, 0, "Bauhaus 93"))
+
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing EndGame Text"));
 	if (!playAgain.initialize(graphics, 50, 0, 0, "OCR A Extended"))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing PlayAgain Text"));
@@ -117,10 +114,10 @@ void Spacewar::update()
 		}
 	}
 	if(input->isKeyDown(VK_SPACE)){
+		level = 0;
 		reset();
 		player1.resetScore();
 		player2.resetScore();
-		level = 0;
 	}
 #pragma region Hard mode
 	if(gameClock >= 7 && !hardMode){
@@ -378,12 +375,16 @@ void Spacewar::render()
 			playAgain.setFontColor(graphicsNS::WHITE);
 			if (player1.getScore() > 1) {
 				endGame.setFontColor(graphicsNS::RED);
-				endGame.print("Red Player WINS!", 250, 225);
+
+				endGame.print("RED PLAYER WINS!", 220, 225);
+
 				playAgain.print("PRESS SPACE FOR A NEW GAME", 120, 375);
 			}
 			else if (player2.getScore() > 1) {
 				endGame.setFontColor(graphicsNS::B_GREEN);
-				endGame.print("Green Player WINS!", 250, 225);
+
+				endGame.print("GREEN PLAYER WINS!", 220, 225);
+
 				playAgain.print("PRESS SPACE FOR A NEW GAME", 120, 375);
 			}
 		}
@@ -391,11 +392,11 @@ void Spacewar::render()
 	else {
 		if (player1.isPlayerDead()){
 			whoScored.setFontColor(graphicsNS::B_GREEN);
-			whoScored.print("Green Player Score!", 240, 80);
+			whoScored.print("Green Player Score!", 200, 80);
 		}
 		if (player2.isPlayerDead()) {
 			whoScored.setFontColor(graphicsNS::RED);
-			whoScored.print("Red Player Score!", 250, 80);
+			whoScored.print("Red Player Score!", 230, 80);
 		}
 	}
 #pragma endregion
@@ -481,6 +482,8 @@ void Spacewar::reset(){
 		}
 	}
 	if(level == 0){
+		lvl1Obstacle.activate();
+		lvl1Obstacle.setVisible(true);
 		for(int i = 0; i < 4; i++){
 			lvl2Obstacles[i].setActive(false);
 			lvl2Obstacles[i].setVisible(false);
