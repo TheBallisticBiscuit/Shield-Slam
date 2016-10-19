@@ -55,6 +55,7 @@ const char BEEP4[] = "beep4";
 const char HIT[]   = "hit";
 const char BOUNCE_SOUND[] = "BounceSound";
 const char LASER_SOUND[] = "LaserSound";
+const char WALL_HIT[] = "WallHit2";
 const char DEATH[] = "Death";
 
 //Player 1 Cel

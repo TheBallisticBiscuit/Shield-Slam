@@ -30,28 +30,28 @@ void Bullet::update(float frameTime){
 		setX((float)GAME_WIDTH-getWidth()*BULLET_SCALING);   // position off screen left
 		if(velocity.x > 0){
 			velocity.x *= -1;
-			audio->playCue(BOUNCE_SOUND);
+			audio->playCue(WALL_HIT);
 		}
 	}
 	if (testX < 0-20){       // if off screen left
 		setX(0);           // position off screen right
 		if(velocity.x < 0){
 			velocity.x *= -1;
-			audio->playCue(BOUNCE_SOUND);
+			audio->playCue(WALL_HIT);
 		}
 	}
 	if(testY + getHeight()*BULLET_SCALING > GAME_HEIGHT+20){ //If off screen bottom
 		setY((float)GAME_HEIGHT-getHeight()*BULLET_SCALING);
 		if(velocity.y > 0){
 			velocity.y *= -1;
-			audio->playCue(BOUNCE_SOUND);
+			audio->playCue(WALL_HIT);
 		}
 	}
 	if(testY < 0-20){ //If off screen top
 		setY(0);
 		if(velocity.y < 0){
 			velocity.y *= -1;
-			audio->playCue(BOUNCE_SOUND);
+			audio->playCue(WALL_HIT);
 		}
 	}
 #pragma endregion

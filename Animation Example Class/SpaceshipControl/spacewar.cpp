@@ -279,7 +279,7 @@ void Spacewar::collisions()
 			if (player1.itHitShield(collisionVector)){
 				bullets[i].reflect(player1.getShieldDirection(), player1);
 				if(!player1.isPlayerDead()){
-					audio->playCue(LASER_SOUND);
+					audio->playCue(BOUNCE_SOUND);
 				}
 			}
 			else{
@@ -299,7 +299,7 @@ void Spacewar::collisions()
 			if (player2.itHitShield(collisionVector)){
 				bullets[i].reflect(player2.getShieldDirection(), player2);
 				if(!player2.isPlayerDead()){
-					audio->playCue(LASER_SOUND);
+					audio->playCue(BOUNCE_SOUND);
 				}
 			}
 			else{
