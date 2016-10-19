@@ -83,6 +83,12 @@ void Spacewar::initialize(HWND hwnd)
 
 	if (score.initialize(graphics, 40, 1, 0, "Times New Roman") == false) 
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Score Text"));
+	if (!whoScored.initialize(graphics, 80, 1, 0, "Times New Roman"))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing DeathText"));
+	if (!endGame.initialize(graphics, 70, 1, 0, "Times New Roman"))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing EndGame Text"));
+	if (!playAgain.initialize(graphics, 60, 0, 0, "Times New Roman"))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing PlayAgain Text"));
 
 	audio->playCue(BACKGROUND_MUSIC);
 	gameClock = 0;
@@ -334,11 +340,39 @@ void Spacewar::render()
 	for(int i = 0; i < 4; i++){
 		lvl2Obstacles[i].draw();
 	}
-
+#pragma region Screen Text
 	score.setFontColor(graphicsNS::RED);
 	score.print("Score: " + std::to_string(player1.getScore()), 40, 525);
 	score.setFontColor(graphicsNS::B_GREEN);
 	score.print("Score: " + std::to_string(player2.getScore()), 850, 525);
+
+
+	if (level == 2) {
+		if (player1.isPlayerDead() || player2.isPlayerDead()) {
+			endGame.setFontColor(graphicsNS::BLACK);
+			playAgain.setFontColor(graphicsNS::BLUE);
+			if (player1.getScore() > 1) {
+				endGame.print("Red Player WINS!", 250, 300);
+				playAgain.print("Press SPACE for a new game", 250, 450);
+			}
+			else if (player2.getScore() > 1) {
+				endGame.print("Green Player WINS!", 250, 300);
+				playAgain.print("Press SPACE for a new game", 250, 450);
+			}
+		}
+	}
+	else {
+		if (player1.isPlayerDead()){
+			whoScored.setFontColor(graphicsNS::B_GREEN);
+			whoScored.print("Green Player Score!", 240, 80);
+		}
+		if (player2.isPlayerDead()) {
+			whoScored.setFontColor(graphicsNS::RED);
+			whoScored.print("Red Player Score!", 250, 80);
+		}
+	}
+#pragma endregion
+
 	graphics->spriteEnd();                  // end drawing sprites
 }
 

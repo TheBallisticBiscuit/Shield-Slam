@@ -33,7 +33,9 @@ private:
 	Obstacle obstacle;
 
 	TextDX score;
-	TextDX deathText;
+	TextDX whoScored;
+	TextDX endGame;
+	TextDX playAgain;
 
 	enum LastDirection {left, right, up, down} greenLastDirection;
 	LastDirection redLastDirection;
